@@ -765,10 +765,10 @@
         }
 
         document.getElementById('curationForm').onsubmit = function(e) {
-            e.preventDefault();
-            document.getElementById('curationForm').style.display = 'none';
-            document.getElementById('successMessage').classList.add('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            var btn = document.querySelector('#submitArea button');
+            btn.innerHTML = 'Enviando dados... Aguarde';
+            btn.style.opacity = '0.7';
+            btn.disabled = true; });
         };
 
         renderRanking('materialRanking', {algodao:'Algodão', poliester:'Poliéster', misturas:'Misturas'}, materialRankingOrder);
