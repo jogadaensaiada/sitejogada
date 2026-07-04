@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -431,7 +431,7 @@
                 <div class="progress-fill" id="progressFill"></div>
             </div>
 
-            <form id="curationForm" action="https://script.google.com/macros/s/AKfycbxTr2LVXOnqL9UpnPpEixDUSSYBMGr1TMwjyUIBSu69AwhrLwb9_KOS20Kj7ohKaee0/exec" method="POST">
+            <form id="curationForm" action="https://script.google.com/macros/s/AKfycbx1dGG_uUfwjiWcVCEOwps43EUUlXk4NSX8Ve_xNUN_o_muLFbNt3Qk0le2NSsSzgne/exec" method="POST">
                 <div class="form-section active" id="section-0">
                     <h2>Onde entregamos sua caixa?</h2>
                     <p>Informe seu endereço para enviarmos sua curadoria direto para o seu campo base!</p>
@@ -765,10 +765,11 @@
         }
 
         document.getElementById('curationForm').onsubmit = function(e) {
+            // Removemos o preventDefault() para que o formulário envie os dados de verdade!
             var btn = document.querySelector('#submitArea button');
             btn.innerHTML = 'Enviando dados... Aguarde';
             btn.style.opacity = '0.7';
-            btn.disabled = true; });
+            btn.disabled = true;
         };
 
         renderRanking('materialRanking', {algodao:'Algodão', poliester:'Poliéster', misturas:'Misturas'}, materialRankingOrder);
