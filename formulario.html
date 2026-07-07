@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -387,12 +387,12 @@
 
         .success-message {
             display: none;
-            background: #0f2a0f;
-            border: 2px solid #4caf50;
+            background: #0a0a0a;
+            border: 1px solid #222;
             border-radius: 10px;
             padding: 25px;
             text-align: center;
-            color: #4caf50;
+            color: #fff;
             margin-top: 20px;
         }
 
@@ -435,13 +435,14 @@
                 <div class="form-section active" id="section-0">
                     <h2>Onde entregamos sua caixa?</h2>
                     <p>Informe seu endereço para enviarmos sua curadoria direto para o seu campo base!</p>
-                    <input type="text" name="cep" class="text-input" placeholder="CEP" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="8" onblur="checkCEP(this)">
+                    <input type="text" name="cep" class="text-input" placeholder="CEP" required oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(\d{5})(\d)/, '$1-$2');" maxlength="9" onblur="checkCEP(this)">
+                    <small style="color: #666; font-size: 0.75rem; margin-top: 4px; display: block;">Ex: 12345-678</small>
                     <div class="options-grid-2" style="grid-template-columns: 3fr 1fr; gap: 10px;">
                         <input type="text" name="rua" class="text-input" placeholder="Rua / Logradouro" required>
                         <input type="text" name="numero" class="text-input" placeholder="Nº" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <input type="text" name="complemento" class="text-input" placeholder="Complemento (opcional)">
-                    <button type="button" class="btn-primary" style="margin-top: 10px;" onclick="if(document.querySelector('input[name=''cep'']').value && document.querySelector('input[name=''rua'']').value && document.querySelector('input[name=''numero'']').value) { activateSection('section-1', 10); } else { alert('Por favor, preencha o CEP, Rua e Nmero para prosseguir!'); }">Prximo Passo</button>
+                    <button type="button" class="btn-primary" style="margin-top: 10px;" onclick="validarEndereco()">Próximo Passo</button>
                 </div>
 
                 <div class="form-section" id="section-1">
@@ -532,9 +533,61 @@
                 </div>
             </form>
 
-            <div id="successMessage" class="success-message">
-                <h3>Curadoria Finalizada! ⚽</h3>
-                <p>Sua estratégia de jogo foi recebida. Em breve você receberá as melhores peças da Jogada Ensaiada!</p>
+            <div id="successMessage" class="success-message" style="display:none;">
+                <h3 style="font-family:'Bebas Neue',cursive; font-size:2rem; color:#feb205; margin-bottom:10px;">Curadoria Finalizada!</h3>
+                <p style="color:#bbb; margin-bottom:30px;">Sua estratégia de jogo foi recebida. Agora escolha o plano ideal para entrar em campo!</p>
+                
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; width:100%; max-width:800px; margin:0 auto;">
+                    <!-- Card Mensal -->
+                    <div style="background:#0a0a0a; border:1px solid #222; border-radius:16px; padding:2rem 1.2rem; display:flex; flex-direction:column; text-align:center; transition:all .3s;">
+                        <div style="font-size:1.3rem; font-weight:800; text-transform:uppercase; margin-bottom:0.5rem; color:#fff;">Mensal</div>
+                        <div style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
+                            <div style="font-size:2rem; font-weight:900; color:#feb205; font-family:'Bebas Neue',cursive; letter-spacing:1px;">R$ 149,90</div>
+                            <div style="font-size:0.8rem; color:#777; margin-top:4px;">renovação mês a mês</div>
+                        </div>
+                        <ul style="list-style:none; flex:1; display:flex; flex-direction:column; gap:8px; margin-bottom:1.5rem; text-align:left;">
+                            <li style="font-size:0.85rem; color:#ccc; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
+                            <li style="font-size:0.85rem; color:#ccc; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> R$ 200+ em produtos</li>
+                        </ul>
+                        <a href="#" onclick="escolherPlano('Mensal', 'LINK_MERCADOPAGO_MENSAL')" style="display:block; width:100%; padding:14px; background:#feb205; border:none; color:#000; font-weight:800; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; border-radius:8px; text-align:center; text-decoration:none; transition:all .3s; cursor:pointer;">Assinar Mensal</a>
+                    </div>
+
+                    <!-- Card Trimestral -->
+                    <div style="background:#0a0a0a; border:1px solid #222; border-radius:16px; padding:2rem 1.2rem; display:flex; flex-direction:column; text-align:center; transition:all .3s;">
+                        <div style="font-size:1.3rem; font-weight:800; text-transform:uppercase; margin-bottom:0.5rem; color:#fff;">Trimestral</div>
+                        <div style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
+                            <div style="font-size:2rem; font-weight:900; color:#feb205; font-family:'Bebas Neue',cursive; letter-spacing:1px;">R$ 139,90</div>
+                            <div style="font-size:0.8rem; color:#777; margin-top:4px;">por mês (ou 419,70 à vista)</div>
+                        </div>
+                        <ul style="list-style:none; flex:1; display:flex; flex-direction:column; gap:8px; margin-bottom:1.5rem; text-align:left;">
+                            <li style="font-size:0.85rem; color:#ccc; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
+                            <li style="font-size:0.85rem; color:#ccc; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> R$ 200+ em produtos</li>
+                        </ul>
+                        <a href="#" onclick="escolherPlano('Trimestral', 'LINK_MERCADOPAGO_TRIMESTRAL')" style="display:block; width:100%; padding:14px; background:#feb205; border:none; color:#000; font-weight:800; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; border-radius:8px; text-align:center; text-decoration:none; transition:all .3s; cursor:pointer;">Assinar Trimestral</a>
+                    </div>
+
+                    <!-- Card Anual (Destaque) -->
+                    <div style="background:linear-gradient(180deg,#111 0%,#050505 100%); border:2px solid #feb205; border-radius:16px; padding:2rem 1.2rem; display:flex; flex-direction:column; text-align:center; position:relative; transition:all .3s;">
+                        <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#feb205; color:#000; font-weight:900; font-size:0.7rem; padding:5px 16px; border-radius:100px; letter-spacing:1px; text-transform:uppercase;">MAIS ESCOLHIDO</div>
+                        <div style="font-size:1.3rem; font-weight:800; text-transform:uppercase; margin-bottom:0.25rem; color:#fff;">Anual</div>
+                        <div style="font-size:0.8rem; color:#999; margin-bottom:0.5rem;">O melhor custo-benefício</div>
+                        <div style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px dashed rgba(255,255,255,0.1);">
+                            <div style="font-size:2rem; font-weight:900; color:#feb205; font-family:'Bebas Neue',cursive; letter-spacing:1px;">R$ 124,90</div>
+                            <div style="font-size:0.8rem; color:#777; margin-top:4px;">por mês (ou 1.426,80 à vista)</div>
+                        </div>
+                        <ul style="list-style:none; flex:1; display:flex; flex-direction:column; gap:8px; margin-bottom:1.5rem; text-align:left;">
+                            <li style="font-size:0.85rem; color:#fff; font-weight:700; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
+                            <li style="font-size:0.85rem; color:#fff; font-weight:700; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Brindes surpresa</li>
+                            <li style="font-size:0.85rem; color:#fff; font-weight:700; display:flex; align-items:center; gap:8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#feb205" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> R$ 250+ em produtos</li>
+                        </ul>
+                        <a href="#" onclick="escolherPlano('Anual', 'LINK_MERCADOPAGO_ANUAL')" style="display:block; width:100%; padding:14px; background:#feb205; border:none; color:#000; font-weight:900; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; border-radius:8px; text-align:center; text-decoration:none; transition:all .3s; cursor:pointer;">Assinar Anual</a>
+                    </div>
+                </div>
+
+                <div style="text-align:center; margin-top:20px; display:flex; justify-content:center; align-items:center; gap:8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span style="font-size:0.8rem; color:#888;">Transação criptografada e 100% segura via <strong>Mercado Pago</strong>.</span>
+                </div>
             </div>
         </div>
 
@@ -564,6 +617,17 @@
 
         function updateProgress(percent) {
             document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        function validarEndereco() {
+            var cep = document.querySelector('input[name="cep"]').value;
+            var rua = document.querySelector('input[name="rua"]').value;
+            var numero = document.querySelector('input[name="numero"]').value;
+            if (cep && rua && numero) {
+                activateSection('section-1', 10);
+            } else {
+                alert('Por favor, preencha o CEP, Rua e Número para prosseguir!');
+            }
         }
 
         function activateSection(id, percent) {
@@ -765,12 +829,47 @@
         }
 
         document.getElementById('curationForm').onsubmit = function(e) {
-            // Removemos o preventDefault() para que o formulário envie os dados de verdade!
+            e.preventDefault();
             var btn = document.querySelector('#submitArea button');
             btn.innerHTML = 'Enviando dados... Aguarde';
             btn.style.opacity = '0.7';
-            // Removido o btn.disabled = true para evitar bugs de submissão no Chrome/Safari
+
+            var form = document.getElementById('curationForm');
+            var formData = new FormData(form);
+
+            // Adiciona rankings ao formData
+            formData.set('materialRanking', materialRankingOrder.join(', '));
+            formData.set('styleRanking', styleRankingOrder.join(', '));
+
+            var SCRIPT_URL = form.action;
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(function() {
+                document.getElementById('curationForm').style.display = 'none';
+                document.getElementById('submitArea').style.display = 'none';
+                var msg = document.getElementById('successMessage');
+                msg.style.display = 'block';
+                msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            })
+            .catch(function() {
+                document.getElementById('curationForm').style.display = 'none';
+                document.getElementById('submitArea').style.display = 'none';
+                var msg = document.getElementById('successMessage');
+                msg.style.display = 'block';
+                msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         };
+
+        function escolherPlano(plano, link) {
+            if (link.indexOf('LINK_MERCADOPAGO') !== -1) {
+                alert('Link de pagamento do plano ' + plano + ' ainda não configurado. Substitua o placeholder pelo link real do Mercado Pago.');
+                return;
+            }
+            window.location.href = link;
+        }
 
         renderRanking('materialRanking', {algodao:'Algodão', poliester:'Poliéster', misturas:'Misturas'}, materialRankingOrder);
         renderRanking('styleRanking', {esportivo:'Esportivo', casual:'Casual', retro:'Retrô', social:'Social'}, styleRankingOrder);
