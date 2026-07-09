@@ -409,12 +409,23 @@
             border-top: 1px solid #2a2a2a;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .options-grid-4 { grid-template-columns: repeat(2, 1fr); }
             .options-grid-2 { grid-template-columns: 1fr; }
             .header h1 { font-size: 2rem; }
             .form-section h2 { font-size: 1.5rem; }
             .option { padding: 14px 10px; }
+            .btn-primary { padding: 16px 30px; font-size: 0.95rem; }
+            .container { padding: 0 10px; }
+        }
+
+        /* Cards de assinatura responsivos */
+        @media (max-width: 700px) {
+            #successMessage > div:nth-child(3) {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+                max-width: 350px !important;
+            }
         }
     </style>
 </head>
@@ -432,10 +443,23 @@
             </div>
 
             <form id="curationForm" action="https://script.google.com/macros/s/AKfycbx1dGG_uUfwjiWcVCEOwps43EUUlXk4NSX8Ve_xNUN_o_muLFbNt3Qk0le2NSsSzgne/exec" method="POST">
-                <div class="form-section active" id="section-0">
+                <div class="form-section active" id="section-dados">
+                    <h2>Seus Dados Pessoais</h2>
+                    <p>Precisamos de algumas informações para criar a sua conta na Jogada Ensaiada</p>
+                    <input type="text" name="nome" class="text-input" placeholder="Nome completo" required>
+                    <input type="email" name="email" class="text-input" placeholder="E-mail" required>
+                    <div class="options-grid-2" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="tel" name="telefone" class="text-input" placeholder="Telefone (DDD + número)" required oninput="this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '($1) $2').replace(/(\d{4,5})(\d{4})$/, '$1-$2');" maxlength="15">
+                        <input type="date" name="nascimento" class="text-input" placeholder="Data de nascimento" required style="color-scheme: dark;" max="9999-12-31" min="1900-01-01">
+                    </div>
+                    <button type="button" class="btn-primary" style="margin-top: 10px;" onclick="validarDados()">Próximo Passo</button>
+                </div>
+
+                <div class="form-section" id="section-0">
                     <h2>Onde entregamos sua caixa?</h2>
                     <p>Informe seu endereço para enviarmos sua curadoria direto para o seu campo base!</p>
                     <input type="text" name="cep" class="text-input" placeholder="CEP" required oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^(\d{5})(\d)/, '$1-$2');" maxlength="9" onblur="checkCEP(this)">
+                    <span id="cepError" style="color: #ff4d4d; font-size: 0.85rem; font-weight: bold; display: none; margin-top: 5px; margin-bottom: 5px;">No momento, as entregas são feitas somente para o estado do Rio de Janeiro.</span>
                     <small style="color: #666; font-size: 0.75rem; margin-top: 4px; display: block;">Ex: 12345-678</small>
                     <div class="options-grid-2" style="grid-template-columns: 3fr 1fr; gap: 10px;">
                         <input type="text" name="rua" class="text-input" placeholder="Rua / Logradouro" required>
@@ -485,9 +509,10 @@
                     <div class="ranking-container" id="materialRanking"></div>
                     <p>Tem algum material que você prefere deixar fora da sua coleção?</p>
                     <div class="options-grid-2" id="materialAvoid">
-                        <div class="option" onclick="selectOption(this, 'material_avoid', event)"><input type="radio" name="material_avoid" value="nenhum" checked><label>Nenhum</label></div>
+                        <div class="option" onclick="selectOption(this, 'material_avoid', event)"><input type="radio" name="material_avoid" value="nenhum" checked><label>Gosto de todos os tipos</label></div>
                         <div class="option" onclick="selectOption(this, 'material_avoid', event)"><input type="radio" name="material_avoid" value="poliester"><label>Poliéster</label></div>
                         <div class="option" onclick="selectOption(this, 'material_avoid', event)"><input type="radio" name="material_avoid" value="algodao"><label>Algodão</label></div>
+                        <div class="option" onclick="selectOption(this, 'material_avoid', event)"><input type="radio" name="material_avoid" value="misturas"><label>Misturas</label></div>
                     </div>
                 </div>
 
@@ -503,9 +528,11 @@
                     <div class="ranking-container" id="styleRanking"></div>
                     <p>O que não combina com o seu jogo?</p>
                     <div class="options-grid-2" id="styleAvoid">
-                        <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="nenhum" checked><label>Nenhum</label></div>
+                        <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="nenhum" checked><label>Gosto de todos os tipos</label></div>
                         <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="retro"><label>Retrô</label></div>
                         <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="esportivo"><label>Esportivo</label></div>
+                        <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="casual"><label>Casual</label></div>
+                        <div class="option" onclick="selectOption(this, 'style_avoid', event)"><input type="radio" name="style_avoid" value="social"><label>Social</label></div>
                     </div>
                 </div>
 
@@ -619,11 +646,53 @@
             document.getElementById('progressFill').style.width = percent + '%';
         }
 
+        function validarDados() {
+            var nome = document.querySelector('input[name="nome"]').value;
+            var email = document.querySelector('input[name="email"]').value;
+            var telefone = document.querySelector('input[name="telefone"]').value;
+            var nascimento = document.querySelector('input[name="nascimento"]').value;
+            
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!nome || !email || !telefone || !nascimento) {
+                alert('Por favor, preencha todos os dados pessoais para prosseguir!');
+                return;
+            }
+            if (!emailRegex.test(email)) {
+                alert('Por favor, insira um e-mail válido!');
+                return;
+            }
+            if (telefone.length < 14) {
+                alert('Por favor, insira um número de telefone válido (com DDD)!');
+                return;
+            }
+            var ano = nascimento.split('-')[0];
+            if (ano.length > 4 || parseInt(ano) < 1900 || parseInt(ano) > new Date().getFullYear()) {
+                alert('Por favor, insira uma data de nascimento válida!');
+                return;
+            }
+
+            document.getElementById('section-dados').classList.add('completed');
+            var section = document.getElementById('section-0');
+            section.classList.add('active');
+            updateProgress(5);
+            setTimeout(function() { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+        }
+
         function validarEndereco() {
             var cep = document.querySelector('input[name="cep"]').value;
             var rua = document.querySelector('input[name="rua"]').value;
             var numero = document.querySelector('input[name="numero"]').value;
+            
+            var cepLimpo = cep.replace(/\D/g, '');
+            var prefix = parseInt(cepLimpo.substring(0, 2));
+            if (cepLimpo.length === 8 && (prefix < 20 || prefix > 28)) {
+                document.getElementById('cepError').style.display = 'block';
+                return;
+            }
+            
             if (cep && rua && numero) {
+                document.getElementById('cepError').style.display = 'none';
                 activateSection('section-1', 10);
             } else {
                 alert('Por favor, preencha o CEP, Rua e Número para prosseguir!');
