@@ -51,8 +51,8 @@
 
   /* HEADER */
   header { position: sticky; top: 0; z-index: 1000; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 184, 0, 0.1); height: 70px; display: flex; align-items: center; padding: 0 2rem; transition: background 0.3s; }
-  .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; margin: 0 auto; }
-  nav { display: flex; gap: 2rem; align-items: center; }
+  .header-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; margin: 0 auto; position: relative; }
+  nav { display: flex; gap: 2rem; align-items: center; position: absolute; left: 50%; transform: translateX(-50%); }
   nav a { color: var(--branco); text-decoration: none; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: color .2s; }
   nav a:hover { color: var(--verde); }
   .btn-header { background: var(--verde); color: var(--preto); font-weight: 800; font-size: 0.85rem; padding: 10px 24px; letter-spacing: 1px; }
@@ -206,46 +206,46 @@
       <div>
         <span class="section-tag">O que tem na caixa?</span>
         <h2 class="section-title">UMA EXPERIÊNCIA ALÉM DOS <span style="color:var(--verde)">90 MINUTOS</span></h2>
-        <p class="section-sub">A Jogada Ensaiada é estruturada para entregar desejo e alto custo-benefício. Esqueça itens parados no armário: enviamos peças que você vai querer usar.</p>
+        <p class="section-sub">A Jogada Ensaiada transforma a paixão pelo futebol em uma experiência exclusiva. Produtos oficiais, escolhidos para combinar com o seu estilo.</p>
         
         <div class="feature-item">
           <div class="feature-dot">✓</div>
           <div>
-            <h4 style="font-weight: 700; margin-bottom: 4px;">Licenciamento Oficial</h4>
-            <p style="color: var(--cinza); font-size: 0.9rem;">Trabalhamos apenas com peças originais e licenciadas das maiores marcas e clubes.</p>
+            <h4 style="font-weight: 700; margin-bottom: 4px;">Produtos Oficiais</h4>
+            <p style="color: var(--cinza); font-size: 0.9rem;">Trabalhamos apenas com produtos originais, oficiais ou licenciados das maiores marcas e clubes.</p>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-dot">✓</div>
           <div>
-            <h4 style="font-weight: 700; margin-bottom: 4px;">Garantia de Lucro</h4>
-            <p style="color: var(--cinza); font-size: 0.9rem;">O valor somado dos itens na caixa é sempre superior ao valor pago na assinatura.</p>
+            <h4 style="font-weight: 700; margin-bottom: 4px;">100% do Valor em Produtos</h4>
+            <p style="color: var(--cinza); font-size: 0.9rem;">Todo o valor da sua assinatura é convertido em produtos selecionados para a sua caixa.</p>
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-dot">✓</div>
           <div>
-            <h4 style="font-weight: 700; margin-bottom: 4px;">Zero Burocracia</h4>
-            <p style="color: var(--cinza); font-size: 0.9rem;">Gerencie sua assinatura: mude seu plano ou cancele quando quiser.</p>
+            <h4 style="font-weight: 700; margin-bottom: 4px;">Assinatura sem burocracia</h4>
+            <p style="color: var(--cinza); font-size: 0.9rem;">A assinatura mensal pode ser cancelada a qualquer momento. Consulte os termos dos planos trimestral e anual.</p>
           </div>
         </div>
       </div>
       <div class="sobre-visual">
         <div class="sobre-card">
-          <h4>1. Escolha</h4>
-          <p>Defina seu plano e preencha nosso formulário com os produtos de sua preferência.</p>
+          <h4>1. ESCOLHA</h4>
+          <p>Escolha seu plano e responda ao formulário para conhecermos o seu perfil.</p>
         </div>
         <div class="sobre-card">
-          <h4>2. Curadoria</h4>
-          <p>Nossos especialistas montam uma seleção surpresa impecável de produtos, feita para você!</p>
+          <h4>2. CURADORIA</h4>
+          <p>Nossa equipe seleciona os produtos com base nas suas respostas. A montagem da caixa é feita exclusivamente para você!</p>
         </div>
         <div class="sobre-card">
-          <h4>3. Entrega</h4>
-          <p>A caixa é despachada e chega com segurança e rapidez na sua porta.</p>
+          <h4>3. ENTREGA</h4>
+          <p>Sua caixa é preparada e enviada em até 10 dias, após confirmação de pagamento, com total segurança.</p>
         </div>
         <div class="sobre-card">
-          <h4>4. Unboxing</h4>
-          <p>Abra, vista o uniforme e prepare-se para o jogo.</p>
+          <h4>4. EXPERIÊNCIA</h4>
+          <p>Receba, descubra cada item e viva uma nova forma de consumir e viver o futebol.</p>
         </div>
       </div>
     </div>
@@ -266,31 +266,35 @@
           <div class="plano-nome">Mensal</div>
           <div class="plano-preco"><div class="valor">R$ 149,90</div><div class="por">renovação mês a mês</div></div>
           <ul class="plano-features">
-            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
-            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> R$ 200+ em produtos</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
         </div>
 
         <!-- Card 2 -->
         <div class="plano-card">
-          <div class="plano-nome">Trimestral</div>
+          <div class="plano-nome">Trimestral <span style="background: var(--verde); color: #000; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: 800; margin-left: 8px; vertical-align: middle; letter-spacing: 0px;">7% OFF</span></div>
           <div class="plano-preco"><div class="valor">R$ 139,90</div><div class="por">por mês (ou 419,70 à vista)</div></div>
           <ul class="plano-features">
-            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
-            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> R$ 200+ em produtos</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Prioridade em lançamentos</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 1 troca por período</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
+            <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
         </div>
 
         <!-- Card 4 (DESTAQUE CRO) -->
         <div class="plano-card destaque">
           <div class="badge-destaque">MAIS ESCOLHIDO</div>
-          <div class="plano-nome">Anual</div>
+          <div class="plano-nome">Anual <span style="background: var(--verde); color: #000; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: 800; margin-left: 8px; vertical-align: middle; letter-spacing: 0px;">17% OFF</span></div>
           <div class="plano-desc">O melhor custo-benefício</div>
           <div class="plano-preco"><div class="valor">R$ 124,90</div><div class="por">por mês (ou 1.426,80 à vista)</div></div>
           <ul class="plano-features">
-            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Camisas e itens oficiais</li>
-            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Brindes surpresa</li>
-            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> R$ 250+ em produtos</li>
+            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Caixa extra de aniversário</li>
+            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Prioridade em lançamentos</li>
+            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 2 trocas por ano</li>
+            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
+            <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
         </div>
       </div>
@@ -320,11 +324,15 @@
         </details>
         <details class="faq-item" name="faq">
           <summary>Posso cancelar minha assinatura a qualquer momento?</summary>
-          <p>Sim! Você pode cancelar quando quiser diretamente pelo seu painel de usuário, sem multas ou taxas ocultas.</p>
+          <p>Sim! para planos mensais, o cancelamento pode ser feito facilmente no painel do seu Infinity Pay a qualquer momento. Para planos trimestrais e anuais, consulte nosso termo de uso.</p>
         </details>
         <details class="faq-item" name="faq">
           <summary>Como funciona a escolha dos produtos e tamanhos?</summary>
           <p>Após a escolha do seu plano, você será ecaminhado para um formulário de curadoria montado especialmente por nossos especialistas. Nele, você escolhe seu tamanho de blusa, além de adicionar seu time do coração e seus produtos de preferência.</p>
+        </details>
+        <details class="faq-item" name="faq">
+          <summary>Onde a Jogada Ensaiada atua?</summary>
+          <p>No momento, a Jogada Ensaiada realiza entregas exclusivamente para o estado do Rio de Janeiro. Mas não se preocupe, em breve a caixa mais amada estará disponível em sua cidade!</p>
         </details>
       </div>
     </div>
@@ -341,6 +349,18 @@
     <div style="color: var(--cinza); font-size: 0.95rem;">
       <p style="font-weight: 700; color: var(--branco); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Precisa de ajuda?</p>
       <p>Suporte: <a href="mailto:contato@jogadaensaiada.com" style="color: var(--verde); text-decoration: none; transition: color 0.2s;">contato@jogadaensaiada.com</a></p>
+    </div>
+
+    <div style="margin-top: 1.5rem; color: var(--cinza); font-size: 0.95rem;">
+      <p style="font-weight: 700; color: var(--branco); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Nos siga nas redes sociais</p>
+      <a href="https://www.instagram.com/ajogadaensaiada/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; color: var(--verde); text-decoration: none; transition: color 0.2s; font-weight: 500;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        @ajogadaensaiada
+      </a>
     </div>
 
     <div style="margin-top: 1rem;">
