@@ -451,13 +451,17 @@
   .plano-feat svg { width: 18px; height: 18px; flex-shrink: 0; fill: none; stroke-width: 2.5; stroke: var(--verde); }
   .plano-feat.cross { color: #444; }
   .plano-feat.cross svg { stroke: #444; }
-  .btn-plano { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--branco); font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; border-radius: 8px; text-align: center;}
-  .btn-plano:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
-  .plano-card.destaque .btn-plano { background: var(--verde); color: #000; border: none; }
-  .plano-card.destaque .btn-plano:hover { background: var(--verde-dark); transform: translateY(-2px); }
+  .btn-plano { display: block; width: 100%; padding: 16px; background: var(--verde); border: none; color: #000; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; border-radius: 8px; text-align: center; cursor: pointer; text-decoration: none; transition: all .3s; margin-top: auto;}
+    .btn-plano:hover { background: var(--verde-dark); transform: translateY(-2px); }
 
-  
-</style>
+    @media (max-width: 1024px) {
+      .planos-grid { grid-template-columns: repeat(2, 1fr); max-width: 800px; gap: 2rem; }
+      .plano-card.destaque { transform: scale(1); z-index: 1; }
+    }
+    @media (max-width: 600px) {
+      .planos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
     <div class="container">
