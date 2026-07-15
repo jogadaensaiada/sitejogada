@@ -925,6 +925,9 @@
             document.getElementById('btnIndicar').style.display = 'none';
         }
 
+        let currentOrderId = '';
+        let currentCustomerEmail = '';
+
         document.getElementById('curationForm').onsubmit = function(e) {
             e.preventDefault();
             var btn = document.querySelector('#submitArea button');
@@ -941,32 +944,72 @@
             var SCRIPT_URL = form.action;
 
             fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: formData
-            })
-            .then(function() {
-                document.getElementById('curationForm').style.display = 'none';
-                document.getElementById('submitArea').style.display = 'none';
-                var msg = document.getElementById('successMessage');
-                msg.style.display = 'block';
-                msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            })
-            .catch(function() {
-                document.getElementById('curationForm').style.display = 'none';
-                document.getElementById('submitArea').style.display = 'none';
-                var msg = document.getElementById('successMessage');
-                msg.style.display = 'block';
-                msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => response.json())
+              .then(function(data) {
+                  if (data.result === 'success') {
+                      currentOrderId = data.id;
+                      currentCustomerEmail = formData.get('email');
+                  }
+                  document.getElementById('curationForm').style.display = 'none';
+                  document.getElementById('submitArea').style.display = 'none';
+                  var msg = document.getElementById('successMessage');
+                  msg.style.display = 'block';
+                  msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              })
+              .catch(function(e) {
+                  document.getElementById('curationForm').style.display = 'none';
+                  document.getElementById('submitArea').style.display = 'none';
+                  var msg = document.getElementById('successMessage');
+                  msg.style.display = 'block';
+                  msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              });
         };
 
         function escolherPlano(plano, link) {
-            if (link.indexOf('LINK_INFINITYPAY') !== -1) {
-                alert('Link de pagamento do plano ' + plano + ' ainda não configurado. Substitua o placeholder pelo link real do Infinity Pay.');
-                return;
-            }
-            window.location.href = link;
-        }
+              if (link.indexOf('LINK_INFINITYPAY') !== -1) {
+                  alert('Link de pagamento do plano ' + plano + ' ainda não configurado.');
+                  return;
+              }
+
+              // Se não temos o ID do pedido (ex: preenchimento antigo), faz fallback pro link estático
+              if (!currentOrderId) {
+                  window.location.href = link;
+                  return;
+              }
+
+              var btn = event.currentTarget || event.target;
+              var originalText = btn.innerHTML;
+              btn.innerHTML = 'Gerando link...';
+              btn.style.opacity = '0.7';
+              btn.style.pointerEvents = 'none';
+
+              var SCRIPT_URL = document.getElementById('curationForm').action;
+              var formData = new FormData();
+              formData.append('action', 'generateLink');
+              formData.append('id_pedido', currentOrderId);
+              formData.append('plano', plano);
+              formData.append('email', currentCustomerEmail);
+
+              fetch(SCRIPT_URL, {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.url) {
+                      window.location.href = data.url;
+                  } else {
+                      alert("Erro ao gerar link: " + (data.error || "Desconhecido"));
+                      window.location.href = link; // Fallback
+                  }
+              })
+              .catch(err => {
+                  window.location.href = link; // Fallback
+              });
+          }
 
         renderRanking('materialRanking', {algodao:'Algodão', poliester:'Poliéster', misturas:'Misturas'}, materialRankingOrder);
         renderRanking('styleRanking', {esportivo:'Esportivo', casual:'Casual', retro:'Retrô', social:'Social', praia:'Moda praia'}, styleRankingOrder);
