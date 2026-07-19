@@ -608,7 +608,7 @@
             <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
             <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
-          <a href="#" onclick="escolherPlano('Mensal', 'https://checkout.infinitepay.io/a-jogada-ensaiada/0NBvl0PX5W')" class="btn-plano">Assinar Mensal</a>
+          <a href="https://mpago.la/2mCRQMr" target="_blank" rel="noopener noreferrer" class="btn-plano">Assinar Mensal</a>
         </div>
 
         <!-- Card 2 -->
@@ -621,7 +621,7 @@
             <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
             <li class="plano-feat"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
-          <a href="#" onclick="escolherPlano('Trimestral', 'https://invoice.infinitepay.io/plans/giovanna-correa-dos-161/6mdX0aOJhB')" class="btn-plano">Assinar Trimestral</a>
+          <a href="https://mpago.la/2bJY4BJ" target="_blank" rel="noopener noreferrer" class="btn-plano">Assinar Trimestral</a>
         </div>
 
         <!-- Card 4 (DESTAQUE CRO) -->
@@ -637,7 +637,7 @@
             <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> 100% do valor revertido em produtos</li>
             <li class="plano-feat" style="color:#fff; font-weight:700;"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Frete grátis</li>
           </ul>
-          <a href="#" onclick="escolherPlano('Anual', 'https://invoice.infinitepay.io/plans/giovanna-correa-dos-161/kv7z6wWYId')" class="btn-plano">Assinar Anual</a>
+          <a href="https://mpago.la/1BbihAL" target="_blank" rel="noopener noreferrer" class="btn-plano">Assinar Anual</a>
         </div>
       </div>
       
@@ -967,49 +967,6 @@
                   msg.scrollIntoView({ behavior: 'smooth', block: 'start' });
               });
         };
-
-        function escolherPlano(plano, link) {
-              if (link.indexOf('LINK_INFINITYPAY') !== -1) {
-                  alert('Link de pagamento do plano ' + plano + ' ainda não configurado.');
-                  return;
-              }
-
-              // Se não temos o ID do pedido (ex: preenchimento antigo), faz fallback pro link estático
-              if (!currentOrderId) {
-                  window.location.href = link;
-                  return;
-              }
-
-              var btn = event.currentTarget || event.target;
-              var originalText = btn.innerHTML;
-              btn.innerHTML = 'Gerando link...';
-              btn.style.opacity = '0.7';
-              btn.style.pointerEvents = 'none';
-
-              var SCRIPT_URL = document.getElementById('curationForm').action;
-              var formData = new FormData();
-              formData.append('action', 'generateLink');
-              formData.append('id_pedido', currentOrderId);
-              formData.append('plano', plano);
-              formData.append('email', currentCustomerEmail);
-
-              fetch(SCRIPT_URL, {
-                  method: 'POST',
-                  body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.url) {
-                      window.location.href = data.url;
-                  } else {
-                      alert("Erro ao gerar link: " + (data.error || "Desconhecido"));
-                      window.location.href = link; // Fallback
-                  }
-              })
-              .catch(err => {
-                  window.location.href = link; // Fallback
-              });
-          }
 
         renderRanking('materialRanking', {algodao:'Algodão', poliester:'Poliéster', misturas:'Misturas'}, materialRankingOrder);
         renderRanking('styleRanking', {esportivo:'Esportivo', casual:'Casual', retro:'Retrô', social:'Social', praia:'Moda praia'}, styleRankingOrder);
