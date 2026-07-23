@@ -269,13 +269,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
+}
 
         .collapsible-content { display: none; padding: 15px; border-top: 1px solid var(--border); }
         .collapsible-content.open { display: block; }
 
-        .btn-confirm {
+        .btn-back {
+            display: block;
             width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+        .action-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .action-group button {
+            margin-top: 0 !important;
+            flex: 1;
+        }
+
+        .btn-confirm {
+            display: block;
             padding: 16px;
             margin-top: 20px;
             background: var(--primary-gradient);
@@ -323,6 +351,7 @@
         .error-msg { color: var(--error); font-size: 0.8rem; margin-top: 5px; display: none; }
 
         @media (max-width: 600px) {
+            .action-group { flex-direction: column-reverse; gap: 10px; }
             .container { padding: 10px 10px 100px; }
             .options-grid { grid-template-columns: 1fr 1fr; }
             .form-section { border-radius: 15px; padding: 20px; }
@@ -380,13 +409,20 @@
                     <input type="text" name="numero" class="text-input" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" onchange="checkCompletion(2)">
                 </div>
                 <div class="input-group">
+                    <label>Complemento (Opcional)</label>
+                    <input type="text" name="complemento" class="text-input">
+                </div>
+                <div class="input-group">
                     <label>Cidade *</label>
                     <input type="text" name="cidade" class="text-input" required id="cidade" readonly>
                 </div>
                 <div class="map-container">
                     <iframe src="https://www.google.com/maps/d/embed?mid=1gMfRI6xbIPtUoZL-c_BqfECqQ_5kLNI&ehbc=2E312F&noprof=1" width="100%" height="100%" frameborder="0"></iframe>
                 </div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(2)">Confirmar Endereço</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(2)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(2)">Confirmar Endereço</button>
+                </div>
             </div>
 
             <!-- 3. Time -->
@@ -397,6 +433,9 @@
                     <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="flamengo"><label>Flamengo</label></div>
                     <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="fluminense"><label>Fluminense</label></div>
                     <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="vasco"><label>Vasco</label></div>
+                </div>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(3)">Voltar</button>
                 </div>
             </div>
 
@@ -409,6 +448,9 @@
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="feminina"><label>Feminina</label></div>
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="infantil"><label>Infantil</label></div>
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="ambas"><label>Masculina e Feminina</label></div>
+                </div>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(4)">Voltar</button>
                 </div>
             </div>
 
@@ -425,7 +467,10 @@
                     <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="poliester"><label>Poliéster</label></div>
                     <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="misturas"><label>Misturas</label></div>
                 </div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(5)">Próximo Passo</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(5)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(5)">Próximo Passo</button>
+                </div>
             </div>
 
             <!-- 6. Estilo -->
@@ -443,7 +488,10 @@
                     <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="social"><label>Social</label></div>
                     <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="modapraia"><label>Moda Praia</label></div>
                 </div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(6)">Próximo Passo</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(6)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(6)">Próximo Passo</button>
+                </div>
             </div>
 
             <!-- 7. Produtos -->
@@ -453,7 +501,10 @@
                     <button type="button" class="select-all-btn" onclick="toggleAllGlobal()">Marcar Todas as Categorias</button>
                 </div>
                 <div id="productsContainer"></div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(7)">Próximo Passo</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(7)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(7)">Próximo Passo</button>
+                </div>
             </div>
 
             <!-- 8. Acervo -->
@@ -466,14 +517,20 @@
                 <div id="inventoryWrapper" style="display: none; margin-top: 20px;">
                     <div id="inventoryContainer"></div>
                 </div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(8)">Próximo Passo</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(8)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(8)">Próximo Passo</button>
+                </div>
             </div>
 
             <!-- 9. Observações -->
             <div class="form-section" id="sec-9">
                 <h2>Observação Adicional (Opcional)</h2>
                 <textarea name="observations" class="text-input" rows="4" style="margin-top: 15px;" placeholder="Exemplo: cores que você evita, estilos que não gosta, suas preferências"></textarea>
-                <button type="submit" class="btn-confirm" style="margin-top: 30px;">Finalizar Curadoria</button>
+                <div class="action-group">
+                    <button type="button" class="btn-back" onclick="backStep(9)">Voltar</button>
+                    <button type="submit" class="btn-confirm">Finalizar Curadoria</button>
+                </div>
             </div>
         </form>
 
@@ -545,6 +602,13 @@
 
         function updateProgress() {
             document.getElementById('progressFill').style.width = ((currentActive / totalSections) * 100) + '%';
+        }
+
+        function backStep(n) {
+            if (n > 1) {
+                document.getElementById(`sec-${n-1}`).classList.remove('completed');
+                activateSection(n - 1);
+            }
         }
 
         function activateSection(n) {
