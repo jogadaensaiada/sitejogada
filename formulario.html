@@ -606,8 +606,12 @@
 
         function backStep(n) {
             if (n > 1) {
+                document.getElementById(`sec-${n}`).classList.remove('active');
                 document.getElementById(`sec-${n-1}`).classList.remove('completed');
-                activateSection(n - 1);
+                currentActive = n - 1;
+                updateProgress();
+                const prevSec = document.getElementById(`sec-${n-1}`);
+                setTimeout(() => prevSec.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
             }
         }
 
