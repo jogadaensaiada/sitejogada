@@ -478,8 +478,8 @@
         </form>
 
         <div id="successScreen" style="display: none; text-align: center; padding: 60px 20px;">
-            <h2 style="color: var(--success); font-size: 3rem; font-family: 'Bebas Neue', cursive;">✓ PERFIL SALVO!</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo e realize o pagamento seguro via Mercado Pago:</p>
+            <h2 style="color: var(--primary); font-size: 3rem; font-family: 'Bebas Neue', cursive;">✓ PERFIL SALVO!</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo e realize o pagamento seguro via InfinitePay:</p>
             
             <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
                 
@@ -492,12 +492,12 @@
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href=" " target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR MENSAL</a>
+                    <a href="https://checkout.infinitepay.io/a-jogada-ensaiada/zVJ0tgZjcm" id="btn-mensal" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR MENSAL</a>
                 </div>
 
                 <!-- CARD TRIMESTRAL -->
                 <div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL <span style="background: var(--success); color: #000; font-size: 0.9rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; font-family: 'Inter', sans-serif;">10% OFF</span></h3>
+                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL</h3>
                     <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 134,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
                     <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Assinatura recorrente via Cartão de Crédito.</p>
                     <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
@@ -505,13 +505,13 @@
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href="LINK_MERCADO_PAGO_TRIMESTRAL_AQUI" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR TRIMESTRAL</a>
+                    <a href="https://invoice.infinitepay.io/plans/a-jogada-ensaiada/9JGA2q53Yz" id="btn-trimestral" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR TRIMESTRAL</a>
                 </div>
 
                 <!-- CARD ANUAL -->
                 <div style="background: var(--surface-alt); border: 2px solid var(--primary); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left; position: relative;">
                     <div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">MAIS POPULAR</div>
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL <span style="background: var(--success); color: #000; font-size: 0.9rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; font-family: 'Inter', sans-serif;">17% OFF</span></h3>
+                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL</h3>
                     <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 124,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
                     <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Assinatura recorrente via Cartão de Crédito.</p>
                     <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
@@ -521,7 +521,7 @@
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href="LINK_MERCADO_PAGO_ANUAL_AQUI" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR ANUAL</a>
+                    <a href="https://invoice.infinitepay.io/plans/a-jogada-ensaiada/ECxeKzUzMr" id="btn-anual" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR ANUAL</a>
                 </div>
 
             </div>
@@ -731,8 +731,7 @@
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
-                    // O erro de CORS às vezes cai no catch no ambiente local, vamos forçar a tela de sucesso se isso acontecer, 
-                    // pois o 'no-cors' envia os dados mesmo assim.
+                    // O erro de CORS às vezes cai no catch no ambiente local, vamos forçar a tela de sucesso se isso acontecer.
                     document.getElementById('curationForm').style.display = 'none';
                     document.getElementById('successScreen').style.display = 'block';
                     window.scrollTo(0, 0);
