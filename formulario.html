@@ -456,12 +456,12 @@
 
             <!-- 5. Materiais -->
             <div class="form-section" id="sec-5">
-                <div class="title-wrapper">
-                    <h2>Materiais</h2>
-                    <div class="help-icon">? <span class="tooltip">Escala o seu time: use as setas ↑ ↓ para criar seu ranking de titulares! O que ficar no topo é o seu craque.</span></div>
+                <div style="margin-bottom: 20px;">
+                    <h2 style="margin-bottom: 5px;">Materiais</h2>
+                    <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Escala o seu time: use as setas ↑ ↓ para criar seu ranking de titulares! O que ficar no topo é o seu craque.</p>
                 </div>
                 <div id="materialRanking"></div>
-                <p style="margin: 20px 0 10px; font-weight: 600;">O que NÃO combina com o seu jogo? (Opcional)</p>
+                <p style="margin: 20px 0 10px; font-weight: 600;">Algum que prefere EVITAR? (Opcional)</p>
                 <div class="options-grid">
                     <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="algodao"><label>Algodão</label></div>
                     <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="poliester"><label>Poliéster</label></div>
@@ -475,9 +475,9 @@
 
             <!-- 6. Estilo -->
             <div class="form-section" id="sec-6">
-                <div class="title-wrapper">
-                    <h2>Estilo</h2>
-                    <div class="help-icon">? <span class="tooltip">Tática de Jogo: Organize sua formação ideal com as setas ↑ ↓. O estilo no topo define como você entra em campo!</span></div>
+                <div style="margin-bottom: 20px;">
+                    <h2 style="margin-bottom: 5px;">Estilo</h2>
+                    <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Tática de Jogo: Organize sua formação ideal com as setas ↑ ↓. O estilo no topo define como você entra em campo!</p>
                 </div>
                 <div id="styleRanking"></div>
                 <p style="margin: 20px 0 10px; font-weight: 600;">O que NÃO combina com o seu jogo? (Opcional)</p>
@@ -536,41 +536,41 @@
 
         <div id="successScreen" style="display: none; text-align: center; padding: 60px 20px;">
             <h2 style="color: var(--primary); font-size: 3rem; font-family: 'Bebas Neue', cursive;">✓ PERFIL SALVO!</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo e realize o pagamento seguro via InfinitePay:</p>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo. O processamento é <strong>100% seguro e criptografado</strong> via Asaas (Instituição autorizada pelo Banco Central).</p>
             
             <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
                 
                 <!-- CARD MENSAL -->
                 <div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">ASSINATURA MENSAL</h3>
+                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO MENSAL</h3>
                     <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 149,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano sem fidelidade. Renovação mensal automática, receba uma caixa por mês até o cancelamento do plano.</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Pagamento único. Não renova automaticamente.</p>
                     <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href="https://www.asaas.com/c/vlfbrlkkb539nl0u" id="btn-mensal" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR MENSAL</a>
+                    <a href="https://www.asaas.com/c/q18x6viplbjzrubw" id="btn-mensal" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR MENSAL</a>
                 </div>
 
                 <!-- CARD TRIMESTRAL -->
                 <div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">ASSINATURA TRIMESTRAL</h3>
+                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL</h3>
                     <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 134,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 3 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Assinatura recorrente via Cartão de Crédito.</p>
                     <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
                         <li>✓ Prioridade em lançamentos</li>
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href="https://invoice.infinitepay.io/plans/a-jogada-ensaiada/9JGA2q53Yz" id="btn-trimestral" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR TRIMESTRAL</a>
+                    <a href="https://www.asaas.com/c/3l9jh2rbcx21dumh" id="btn-trimestral" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR TRIMESTRAL</a>
                 </div>
 
                 <!-- CARD ANUAL -->
                 <div style="background: var(--surface-alt); border: 2px solid var(--primary); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left; position: relative;">
-                    <div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">MAIS POPULAR</div>
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">ASSINATURA ANUAL</h3>
+                    <div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">CUSTO BENEFÍCIO</div>
+                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL</h3>
                     <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 124,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 12 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Assinatura recorrente via Cartão de Crédito.</p>
                     <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
                         <li>✓ Caixa extra de aniversário</li>
                         <li>✓ Prioridade em lançamentos</li>
@@ -578,7 +578,7 @@
                         <li>✓ 100% do valor revertido em produtos</li>
                         <li>✓ Frete grátis</li>
                     </ul>
-                    <a href="https://invoice.infinitepay.io/plans/a-jogada-ensaiada/ECxeKzUzMr" id="btn-anual" target="_blank" class="btn-confirm" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR ANUAL</a>
+                    <a href="https://www.asaas.com/c/vcvruvhhyx6w01oo" id="btn-anual" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR ANUAL</a>
                 </div>
 
             </div>
