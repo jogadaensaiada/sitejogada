@@ -439,18 +439,42 @@
                 </div>
             </div>
 
-            <!-- 4. Modelagem -->
+            <!-- 4. Modelagem e Tamanho -->
             <div class="form-section" id="sec-4">
                 <h2>Modelagem</h2>
                 <p class="section-desc">Escolha perfeita para você entrar em campo.</p>
-                <div class="options-grid">
+                <div class="options-grid" style="margin-bottom: 30px;">
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="masculina" required><label>Masculina</label></div>
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="feminina"><label>Feminina</label></div>
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="infantil"><label>Infantil</label></div>
                     <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="ambas"><label>Masculina e Feminina</label></div>
                 </div>
+
+                <h2>Tamanho</h2>
+                <p class="section-desc">Qual o tamanho ideal da sua camisa?</p>
+                <div id="size-adult" class="options-grid">
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="PP" required><label>PP</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="P"><label>P</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="M"><label>M</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="G"><label>G</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="GG"><label>GG</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XG"><label>XG</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXG"><label>XXG</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXXG"><label>XXXG</label></div>
+                </div>
+                <div id="size-kids" class="options-grid" style="display: none;">
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="2" required><label>2</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="4"><label>4</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="6"><label>6</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="8"><label>8</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="10"><label>10</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="12"><label>12</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="14"><label>14</label></div>
+                </div>
+
                 <div class="action-group">
                     <button type="button" class="btn-back" onclick="backStep(4)">Voltar</button>
+                    <button type="button" class="btn-confirm" onclick="confirmStep(4)">Próximo Passo</button>
                 </div>
             </div>
 
@@ -662,7 +686,15 @@
                 el.classList.add('selected');
                 input.checked = true;
                 if (name === 'team') confirmStep(3);
-                if (name === 'modelagem') confirmStep(4);
+                if (name === 'modelagem') {
+                    const isKids = input.value === 'infantil';
+                    document.getElementById('size-adult').style.display = isKids ? 'none' : 'grid';
+                    document.getElementById('size-kids').style.display = isKids ? 'grid' : 'none';
+                    document.querySelectorAll('input[name="tamanho"]').forEach(inp => {
+                        inp.checked = false;
+                        inp.parentElement.classList.remove('selected');
+                    });
+                }
             } else {
                 el.classList.toggle('selected');
                 input.checked = !input.checked;
