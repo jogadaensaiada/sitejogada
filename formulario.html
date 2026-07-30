@@ -462,6 +462,14 @@
                     <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXG"><label>XXG</label></div>
                     <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXXG"><label>XXXG</label></div>
                 </div>
+                <div id="size-female" class="options-grid" style="display: none;">
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="PP" required><label>PP</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="P"><label>P</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="M"><label>M</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="G"><label>G</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="GG"><label>GG</label></div>
+                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XG"><label>XG</label></div>
+                </div>
                 <div id="size-kids" class="options-grid" style="display: none;">
                     <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="2" required><label>2</label></div>
                     <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="4"><label>4</label></div>
@@ -688,7 +696,9 @@
                 if (name === 'team') confirmStep(3);
                 if (name === 'modelagem') {
                     const isKids = input.value === 'infantil';
-                    document.getElementById('size-adult').style.display = isKids ? 'none' : 'grid';
+                    const isFemale = input.value === 'feminina';
+                    document.getElementById('size-adult').style.display = (!isKids && !isFemale) ? 'grid' : 'none';
+                    document.getElementById('size-female').style.display = isFemale ? 'grid' : 'none';
                     document.getElementById('size-kids').style.display = isKids ? 'grid' : 'none';
                     document.querySelectorAll('input[name="tamanho"]').forEach(inp => {
                         inp.checked = false;
