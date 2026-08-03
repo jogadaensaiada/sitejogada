@@ -721,7 +721,7 @@
 
             if (!form.reportValidity()) return;
 
-            if (!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") ||
+            if (!APPS_SCRIPT_URL.includes("script.google.com") ||
                 !APPS_SCRIPT_URL.endsWith("/exec")) {
                 statusBox.className = "form-status error";
                 statusBox.textContent = "A integração ainda não foi configurada. Insira a URL do Google Apps Script no arquivo HTML.";
