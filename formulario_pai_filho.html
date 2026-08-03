@@ -277,6 +277,58 @@
         }
 
         .hidden { display: none; }
+
+        .form-status {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .form-status.success {
+            display: block;
+            background: rgba(39, 174, 96, 0.15);
+            border: 1px solid #27ae60;
+            color: #b9f6ca;
+        }
+
+        .form-status.error {
+            display: block;
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid #e74c3c;
+            color: #ffc6c1;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+        }
+
+        .checkbox-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #bbb;
+            line-height: 1.4;
+        }
+
+        .checkbox-consent input {
+            margin-top: 3px;
+            accent-color: var(--primary-color);
+        }
+
+        .file-list {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #bbb;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -297,15 +349,17 @@
                 <div class="grid-2">
                     <div>
                         <label>Nome do Pai</label>
-                        <input type="text" placeholder="Nome completo" required>
+                        <input type="text" id="nomePai" name="nomePai" placeholder="Nome completo" autocomplete="name" required>
                     </div>
                     <div>
                         <label>Nome do Filho(a)</label>
-                        <input type="text" placeholder="Nome completo" required>
+                        <input type="text" id="nomeFilho" name="nomeFilho" placeholder="Nome completo" required>
                     </div>
                 </div>
                 <label>Seu melhor e-mail</label>
-                <input type="email" placeholder="email@exemplo.com" required>
+                <input type="email" id="email" name="email" placeholder="email@exemplo.com" autocomplete="email" required>
+                <label>WhatsApp para contato</label>
+                <input type="text" id="whatsapp" name="whatsapp" placeholder="(21) 99999-9999" inputmode="tel" autocomplete="tel" required>
             </div>
 
             <!-- SEÇÃO 2: TIME -->
@@ -319,7 +373,7 @@
 
                 <div id="singleTeam">
                     <label>Qual o time da dupla?</label>
-                    <select required>
+                    <select id="timeDupla" name="timeDupla" required>
                         <option value="">Selecione o time</option>
                         <option>Botafogo</option>
                         <option>Flamengo</option>
@@ -332,7 +386,7 @@
                     <div class="grid-2">
                         <div>
                             <label>Time do Pai</label>
-                            <select>
+                            <select id="timePai" name="timePai">
                                 <option value="">Selecione</option>
                                 <option>Botafogo</option>
                                 <option>Flamengo</option>
@@ -342,7 +396,7 @@
                         </div>
                         <div>
                             <label>Time do Filho(a)</label>
-                            <select>
+                            <select id="timeFilho" name="timeFilho">
                                 <option value="">Selecione</option>
                                 <option>Botafogo</option>
                                 <option>Flamengo</option>
@@ -360,21 +414,21 @@
                 <p class="instruction-text">Sua caixa terá <b>R$ 300,00 em produtos</b>. Escolha o melhor modelo para a sua jogada:</p>
                 <div class="radio-card-group">
                     <label class="radio-card">
-                        <input type="radio" name="pacote" value="1" required>
+                        <input type="radio" name="pacote" value="Produto Premium" required>
                         <div class="info">
                             <b>Produto Premium</b>
                             <span>1 item exclusivo e de alto nível para o seu pai</span>
                         </div>
                     </label>
                     <label class="radio-card">
-                        <input type="radio" name="pacote" value="2">
+                        <input type="radio" name="pacote" value="Paixão Dividida">
                         <div class="info">
                             <b>Paixão Dividida</b>
                             <span>1 produto oficial para o Pai + 1 produto para o Filho</span>
                         </div>
                     </label>
                     <label class="radio-card">
-                        <input type="radio" name="pacote" value="3">
+                        <input type="radio" name="pacote" value="Combo Família">
                         <div class="info">
                             <b>Combo Família</b>
                             <span>1 item para o Pai + 1 para o Filho + 1 item para usarem juntos</span>
@@ -388,11 +442,11 @@
                 <h2><span>4</span> Tamanhos e Estilos</h2>
                 <label style="color: var(--primary-color); margin-bottom: 10px;">PARA O PAI:</label>
                 <div class="grid-2">
-                    <select required>
+                    <select id="tamanhoPai" name="tamanhoPai" required>
                         <option value="">Tamanho da Camisa</option>
                         <option>P</option><option>M</option><option>G</option><option>GG</option><option>XG</option><option>XXG</option><option>XXXG</option>
                     </select>
-                    <select required>
+                    <select id="estiloPai" name="estiloPai" required>
                         <option value="">Estilo Preferido</option>
                         <option>Retrô</option><option>Atual / Jogo</option><option>Casual</option>
                     </select>
@@ -400,14 +454,14 @@
 
                 <label style="color: var(--primary-color); margin-bottom: 10px; margin-top: 10px;">PARA O FILHO(A):</label>
                 <div class="grid-2">
-                    <input type="number" placeholder="Idade" required>
-                    <select required>
+                    <input type="number" id="idadeFilho" name="idadeFilho" min="0" max="100" placeholder="Idade" required>
+                    <select id="modelagemFilho" name="modelagemFilho" required>
                         <option value="">Modelagem</option>
                         <option>Infantil</option><option>Juvenil</option><option>Adulto</option>
                     </select>
                 </div>
                 <label>Tamanho do Filho(a)</label>
-                <select required>
+                <select id="tamanhoFilho" name="tamanhoFilho" required>
                     <option value="">Selecione o tamanho</option>
                     <option disabled>-- INFANTIL --</option>
                     <option>2 anos</option><option>4 anos</option><option>6 anos</option><option>8 anos</option><option>10 anos</option><option>12 anos</option>
@@ -434,7 +488,8 @@
                     <div class="upload-area" onclick="document.getElementById('fileUpload').click()">
                         <span style="font-size: 24px;">📷</span><br>
                         <span style="font-size: 13px; color: #888;">Clique para subir fotos das camisas</span>
-                        <input type="file" id="fileUpload" class="hidden" multiple accept="image/*">
+                        <input type="file" id="fileUpload" class="hidden" multiple accept="image/jpeg,image/png,image/webp">
+                        <div id="fileList" class="file-list"></div>
                     </div>
                 </div>
             </div>
@@ -445,23 +500,23 @@
                 <div class="grid-2">
                     <div>
                         <label>CEP</label>
-                        <input type="text" id="cep" placeholder="00000-000" maxlength="9" onblur="buscaCep()" required>
+                        <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" onblur="buscaCep()" required>
                     </div>
                     <div>
                         <label>Cidade</label>
-                        <input type="text" id="cidade" placeholder="Cidade" required>
+                        <input type="text" id="cidade" name="cidade" placeholder="Cidade" required>
                     </div>
                 </div>
                 <label>Rua</label>
-                <input type="text" id="rua" placeholder="Nome da rua/avenida" required>
+                <input type="text" id="rua" name="rua" placeholder="Nome da rua/avenida" required>
                 <div class="grid-2">
                     <div>
                         <label>Número</label>
-                        <input type="text" placeholder="Nº" required>
+                        <input type="text" id="numero" name="numero" placeholder="Nº" required>
                     </div>
                     <div>
                         <label>Complemento (opcional)</label>
-                        <input type="text" placeholder="Apto, Bloco, etc.">
+                        <input type="text" id="complemento" name="complemento" placeholder="Apto, Bloco, etc.">
                     </div>
                 </div>
                 <div class="map-info">
@@ -474,7 +529,7 @@
             <div class="section">
                 <h2><span>7</span> A Jogada Final</h2>
                 <label>Como vocês mais curtem o futebol juntos?</label>
-                <select required>
+                <select id="momentoFutebol" name="momentoFutebol" required>
                     <option value="">Selecione a vibe</option>
                     <option>No Estádio (Vibração total)</option>
                     <option>No Sofá de Casa (Conforto e resenha)</option>
@@ -482,10 +537,19 @@
                 </select>
 
                 <label>Mensagem para o Cartão (Opcional)</label>
-                <textarea rows="3" placeholder="Escreva algo especial..."></textarea>
+                <textarea id="mensagemCartao" name="mensagemCartao" rows="3" maxlength="500" placeholder="Escreva algo especial..."></textarea>
+
+                <label>Alguma observação importante para a curadoria? (Opcional)</label>
+                <textarea id="observacoes" name="observacoes" rows="3" maxlength="1000" placeholder="Ex.: já possui a camisa atual, não usa boné, prefere itens retrô..."></textarea>
+
+                <label class="checkbox-consent">
+                    <input type="checkbox" id="consentimento" required>
+                    <span>Autorizo o uso destes dados exclusivamente para atendimento, curadoria e entrega da campanha de Dia dos Pais, conforme a política de privacidade da Jogada Ensaiada.</span>
+                </label>
             </div>
 
-            <button type="submit" class="btn-submit">Finalizar Minha Jogada</button>
+            <button type="submit" id="submitButton" class="btn-submit">Finalizar Minha Jogada</button>
+            <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
             <p style="text-align: center; font-size: 12px; color: #666; margin-top: 15px;">
                 * Compra única exclusiva de Dia dos Pais. Sem taxas de assinatura recorrente.
             </p>
@@ -493,7 +557,13 @@
     </div>
 
     <script>
+        // COLE AQUI A URL /exec GERADA PELO GOOGLE APPS SCRIPT
+        const APPS_SCRIPT_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
+
+        let mesmaEquipe = true;
+
         function setSameTeam(isSame) {
+            mesmaEquipe = isSame;
             const single = document.getElementById('singleTeam');
             const split = document.getElementById('splitTeams');
             const btnYes = document.getElementById('btnSameYes');
@@ -504,15 +574,17 @@
                 split.classList.add('hidden');
                 btnYes.classList.add('active');
                 btnNo.classList.remove('active');
-                single.querySelector('select').required = true;
-                split.querySelectorAll('select').forEach(s => s.required = false);
+                document.getElementById('timeDupla').required = true;
+                document.getElementById('timePai').required = false;
+                document.getElementById('timeFilho').required = false;
             } else {
                 single.classList.add('hidden');
                 split.classList.remove('hidden');
                 btnYes.classList.remove('active');
                 btnNo.classList.add('active');
-                single.querySelector('select').required = false;
-                split.querySelectorAll('select').forEach(s => s.required = true);
+                document.getElementById('timeDupla').required = false;
+                document.getElementById('timePai').required = true;
+                document.getElementById('timeFilho').required = true;
             }
         }
 
@@ -535,16 +607,16 @@
                     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                     const data = await response.json();
                     if (!data.erro) {
-                        document.getElementById('rua').value = data.logradouro;
-                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('rua').value = data.logradouro || "";
+                        document.getElementById('cidade').value = data.localidade || "";
                     }
                 } catch (e) {
-                    console.error("Erro ao buscar CEP");
+                    console.error("Erro ao buscar CEP", e);
                 }
             }
         }
 
-        // Gerar inventário de camisas (últimos 10 anos)
+        // Gerar inventário de camisas (últimos 11 anos)
         const container = document.getElementById('inventoryList');
         const currentYear = 2026;
         for (let year = currentYear; year >= currentYear - 10; year--) {
@@ -555,10 +627,10 @@
                     Ano ${year} <span>▼</span>
                 </div>
                 <div class="year-content">
-                    <label><input type="checkbox"> Uniforme 1</label>
-                    <label><input type="checkbox"> Uniforme 2</label>
-                    <label><input type="checkbox"> Uniforme 3</label>
-                    <label><input type="checkbox"> Treino</label>
+                    <label><input type="checkbox" class="inventory-item" value="${year} - Uniforme 1"> Uniforme 1</label>
+                    <label><input type="checkbox" class="inventory-item" value="${year} - Uniforme 2"> Uniforme 2</label>
+                    <label><input type="checkbox" class="inventory-item" value="${year} - Uniforme 3"> Uniforme 3</label>
+                    <label><input type="checkbox" class="inventory-item" value="${year} - Treino"> Treino</label>
                 </div>
             `;
             container.appendChild(yearDiv);
@@ -575,6 +647,163 @@
                 arrow.innerText = '▲';
             }
         }
+
+        function gerarNumeroPedido() {
+            const agora = new Date();
+            const data = agora.toISOString().slice(0, 10).replaceAll("-", "");
+            const hora = agora.toTimeString().slice(0, 8).replaceAll(":", "");
+            const aleatorio = Math.floor(100 + Math.random() * 900);
+            return `JE-DP-${data}-${hora}-${aleatorio}`;
+        }
+
+        function formatarWhatsapp(event) {
+            let valor = event.target.value.replace(/\D/g, '').slice(0, 11);
+            if (valor.length > 10) {
+                valor = valor.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+            } else if (valor.length > 6) {
+                valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+            } else if (valor.length > 2) {
+                valor = valor.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
+            }
+            event.target.value = valor;
+        }
+
+        function formatarCep(event) {
+            let valor = event.target.value.replace(/\D/g, '').slice(0, 8);
+            if (valor.length > 5) {
+                valor = valor.replace(/^(\d{5})(\d{0,3})$/, '$1-$2');
+            }
+            event.target.value = valor;
+        }
+
+        document.getElementById('whatsapp').addEventListener('input', formatarWhatsapp);
+        document.getElementById('cep').addEventListener('input', formatarCep);
+
+        document.getElementById('fileUpload').addEventListener('change', function () {
+            const list = document.getElementById('fileList');
+            const files = Array.from(this.files);
+            if (!files.length) {
+                list.textContent = "";
+                return;
+            }
+            list.innerHTML = files.map(file => `• ${file.name}`).join("<br>");
+        });
+
+        async function arquivosParaBase64(files) {
+            const limiteArquivos = 3;
+            const limiteBytes = 4 * 1024 * 1024;
+            const selecionados = Array.from(files).slice(0, limiteArquivos);
+
+            for (const file of selecionados) {
+                if (file.size > limiteBytes) {
+                    throw new Error(`A foto "${file.name}" ultrapassa 4 MB.`);
+                }
+            }
+
+            return Promise.all(selecionados.map(file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve({
+                    nome: file.name,
+                    tipo: file.type,
+                    conteudoBase64: String(reader.result).split(",")[1]
+                });
+                reader.onerror = () => reject(new Error(`Não foi possível ler "${file.name}".`));
+                reader.readAsDataURL(file);
+            })));
+        }
+
+        const form = document.getElementById('curadoriaForm');
+        const statusBox = document.getElementById('formStatus');
+        const submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            if (!form.reportValidity()) return;
+
+            if (!APPS_SCRIPT_URL.startsWith("https://script.google.com/macros/s/") ||
+                !APPS_SCRIPT_URL.endsWith("/exec")) {
+                statusBox.className = "form-status error";
+                statusBox.textContent = "A integração ainda não foi configurada. Insira a URL do Google Apps Script no arquivo HTML.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Enviando...";
+            statusBox.className = "form-status";
+            statusBox.textContent = "";
+
+            const numeroPedido = gerarNumeroPedido();
+            const timeDupla = document.getElementById('timeDupla').value;
+
+            try {
+                const fotos = await arquivosParaBase64(document.getElementById('fileUpload').files);
+                const inventario = Array.from(
+                    document.querySelectorAll('.inventory-item:checked')
+                ).map(item => item.value);
+
+                const dados = {
+                    numeroPedido,
+                    origem: "Campanha Dia dos Pais 2026",
+                    nomePai: document.getElementById('nomePai').value.trim(),
+                    nomeFilho: document.getElementById('nomeFilho').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    whatsapp: document.getElementById('whatsapp').value.trim(),
+                    mesmaEquipe: mesmaEquipe ? "Sim" : "Não",
+                    timePai: mesmaEquipe ? timeDupla : document.getElementById('timePai').value,
+                    timeFilho: mesmaEquipe ? timeDupla : document.getElementById('timeFilho').value,
+                    pacote: document.querySelector('input[name="pacote"]:checked').value,
+                    tamanhoPai: document.getElementById('tamanhoPai').value,
+                    estiloPai: document.getElementById('estiloPai').value,
+                    idadeFilho: document.getElementById('idadeFilho').value,
+                    modelagemFilho: document.getElementById('modelagemFilho').value,
+                    tamanhoFilho: document.getElementById('tamanhoFilho').value,
+                    inventario: inventario.join(" | "),
+                    cep: document.getElementById('cep').value.trim(),
+                    cidade: document.getElementById('cidade').value.trim(),
+                    rua: document.getElementById('rua').value.trim(),
+                    numero: document.getElementById('numero').value.trim(),
+                    complemento: document.getElementById('complemento').value.trim(),
+                    momentoFutebol: document.getElementById('momentoFutebol').value,
+                    mensagemCartao: document.getElementById('mensagemCartao').value.trim(),
+                    observacoes: document.getElementById('observacoes').value.trim(),
+                    fotos,
+                    paginaOrigem: window.location.href,
+                    navegador: navigator.userAgent
+                };
+
+                // text/plain evita o bloqueio de preflight entre GitHub Pages e Apps Script.
+                await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                statusBox.className = "form-status success";
+                statusBox.innerHTML = `
+                    <strong>Jogada recebida!</strong><br>
+                    Número do pedido: <strong>${numeroPedido}</strong><br>
+                    Enviamos os dados para a equipe da Jogada Ensaiada.
+                `;
+
+                form.reset();
+                setSameTeam(true);
+                document.querySelectorAll('.inventory-item').forEach(item => item.checked = false);
+                document.getElementById('fileList').textContent = "";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+
+            } catch (error) {
+                console.error(error);
+                statusBox.className = "form-status error";
+                statusBox.textContent = error.message || "Não foi possível enviar. Tente novamente.";
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Finalizar Minha Jogada";
+            }
+        });
     </script>
 </body>
 </html>
