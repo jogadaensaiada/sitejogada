@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Curadoria Personalizada - Jogada Ensaiada</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Curadoria Personalizada - Jogada Ensaiada</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
         :root {
             --primary: #feb205;
             --primary-gradient: linear-gradient(135deg, #feb205 0%, #ffc107 100%);
@@ -357,269 +358,387 @@
             .form-section { border-radius: 15px; padding: 20px; }
             body, .container { height: 100%; }
         }
+    
+.delivery-check{margin-top:15px;padding:16px;border-radius:12px;border:1px solid var(--border);background:var(--surface-alt);display:none}.delivery-check.success{display:block;border-color:var(--success);color:#c8f7cc}.delivery-check.warning{display:block;border-color:var(--primary);color:#ffe8a3}.delivery-check.error{display:block;border-color:var(--error);color:#ffc7c7}.map-link-button{display:inline-block;margin-top:12px;padding:11px 16px;border:1px solid var(--primary);border-radius:10px;color:var(--primary);text-decoration:none;font-weight:700;background:transparent}.coupon-feedback{display:none;margin-top:10px;padding:12px;border-radius:10px;font-size:.9rem}.coupon-feedback.valid{display:block;background:rgba(76,175,80,.12);border:1px solid var(--success);color:#c8f7cc}.coupon-feedback.invalid{display:block;background:rgba(255,68,68,.10);border:1px solid var(--error);color:#ffc7c7}.old-price{text-decoration:line-through;color:var(--text-dim);font-size:1rem;margin-right:8px}.discount-badge{display:inline-block;margin-left:8px;padding:3px 8px;border-radius:20px;background:var(--primary);color:#000;font-size:.75rem;font-weight:800;vertical-align:middle}.discount-note{margin:0 auto 25px;max-width:430px;padding:14px;border:1px solid var(--primary);border-radius:12px;background:rgba(254,178,5,.08)}
+
+        .cities-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 12px 16px;
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            color: var(--primary);
+            background: transparent;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.25s;
+        }
+
+        .cities-trigger:hover {
+            background: rgba(254, 178, 5, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .delivery-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(6px);
+        }
+
+        .delivery-modal.open {
+            display: flex;
+        }
+
+        .delivery-modal-card {
+            width: min(520px, 100%);
+            max-height: 85vh;
+            overflow-y: auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+            animation: modalIn 0.22s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(14px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .delivery-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .delivery-modal-close {
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--surface-alt);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cities-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .city-chip {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface-alt);
+            font-size: 0.92rem;
+        }
+
+        .cep-summary {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            line-height: 1.55;
+        }
+
+        .cep-summary.inside {
+            background: rgba(76, 175, 80, 0.12);
+            border: 1px solid var(--success);
+            color: #d7f8da;
+        }
+
+        .cep-summary.outside {
+            background: rgba(254, 178, 5, 0.10);
+            border: 1px solid var(--primary);
+            color: #ffe8a3;
+        }
+
+        .cep-summary.error {
+            background: rgba(255, 68, 68, 0.10);
+            border: 1px solid var(--error);
+            color: #ffc7c7;
+        }
+
+        @media (max-width: 520px) {
+            .cities-list { grid-template-columns: 1fr; }
+        }
+
     </style>
 </head>
 <body>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
-    <div class="container">
-        <div class="header">
-            <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663814465640/FClWsGAlLirkycJB.png" alt="Logo Jogada Ensaiada" class="logo-img">
-            <h1>Sua Curadoria</h1>
-        </div>
-
-        <form id="curationForm" class="form-wrapper">
-            <!-- 1. Dados Pessoais -->
-            <div class="form-section active" id="sec-1">
-                <h2>Seus Dados Pessoais</h2>
-                <div class="input-group" style="margin-top: 20px;">
-                    <label>Nome Completo *</label>
-                    <input type="text" name="nome" class="text-input" required onchange="checkCompletion(1)">
-                </div>
-                <div class="input-group">
-                    <label>E-mail *</label>
-                    <input type="email" name="email" class="text-input" required onchange="checkCompletion(1)">
-                </div>
-                <div class="input-group">
-                    <label>Telefone *</label>
-                    <input type="tel" name="telefone" id="telefone" class="text-input" required placeholder="(00) 00000-0000" onchange="checkCompletion(1)" maxlength="15">
-                </div>
-                <div class="input-group">
-                    <label>Data de Nascimento *</label>
-                    <input type="date" name="nascimento" class="text-input" required id="birthDate" onchange="checkCompletion(1)">
-                    <p class="error-msg" id="ageError">Você deve ter pelo menos 18 anos.</p>
-                </div>
-                <button type="button" class="btn-confirm" onclick="confirmStep(1)">Confirmar Dados</button>
-            </div>
-
-            <!-- 2. Entrega -->
-            <div class="form-section" id="sec-2">
-                <h2>Onde entregamos sua caixa?</h2>
-                <div class="input-group" style="margin-top: 20px;">
-                    <label>CEP *</label>
-                    <input type="text" name="cep" class="text-input" required id="cepInput" maxlength="9" onblur="handleCEP()">
-                    <p class="error-msg" id="cepError">Desculpe, ainda não entregamos nesta região.</p>
-                </div>
-                <div class="input-group">
-                    <label>Logradouro *</label>
-                    <input type="text" name="logradouro" class="text-input" required id="logradouro" readonly>
-                </div>
-                <div class="input-group">
-                    <label>Número *</label>
-                    <input type="text" name="numero" class="text-input" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" onchange="checkCompletion(2)">
-                </div>
-                <div class="input-group">
-                    <label>Complemento (Opcional)</label>
-                    <input type="text" name="complemento" class="text-input">
-                </div>
-                <div class="input-group">
-                    <label>Cidade *</label>
-                    <input type="text" name="cidade" class="text-input" required id="cidade" readonly>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/d/embed?mid=1gMfRI6xbIPtUoZL-c_BqfECqQ_5kLNI&ehbc=2E312F&noprof=1" width="100%" height="100%" frameborder="0"></iframe>
-                </div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(2)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(2)">Confirmar Endereço</button>
-                </div>
-            </div>
-
-            <!-- 3. Time -->
-            <div class="form-section" id="sec-3">
-                <h2>Qual seu time de coração?</h2>
-                <div class="options-grid">
-                    <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="botafogo" required><label>Botafogo</label></div>
-                    <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="flamengo"><label>Flamengo</label></div>
-                    <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="fluminense"><label>Fluminense</label></div>
-                    <div class="option" onclick="selectOption(this, 'team', 'radio')"><input type="radio" name="team" value="vasco"><label>Vasco</label></div>
-                </div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(3)">Voltar</button>
-                </div>
-            </div>
-
-            <!-- 4. Modelagem e Tamanho -->
-            <div class="form-section" id="sec-4">
-                <h2>Modelagem</h2>
-                <p class="section-desc">Escolha perfeita para você entrar em campo.</p>
-                <div class="options-grid" style="margin-bottom: 30px;">
-                    <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="masculina" required><label>Masculina</label></div>
-                    <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="feminina"><label>Feminina</label></div>
-                    <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="infantil"><label>Infantil</label></div>
-                    <div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input type="radio" name="modelagem" value="ambas"><label>Masculina e Feminina</label></div>
-                </div>
-
-                <h2>Tamanho</h2>
-                <p class="section-desc">Qual o tamanho ideal da sua camisa?</p>
-                <div id="size-adult" class="options-grid">
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="PP" required><label>PP</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="P"><label>P</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="M"><label>M</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="G"><label>G</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="GG"><label>GG</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XG"><label>XG</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXG"><label>XXG</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XXXG"><label>XXXG</label></div>
-                </div>
-                <div id="size-female" class="options-grid" style="display: none;">
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="PP" required><label>PP</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="P"><label>P</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="M"><label>M</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="G"><label>G</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="GG"><label>GG</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="XG"><label>XG</label></div>
-                </div>
-                <div id="size-kids" class="options-grid" style="display: none;">
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="2" required><label>2</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="4"><label>4</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="6"><label>6</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="8"><label>8</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="10"><label>10</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="12"><label>12</label></div>
-                    <div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input type="radio" name="tamanho" value="14"><label>14</label></div>
-                </div>
-
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(4)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(4)">Próximo Passo</button>
-                </div>
-            </div>
-
-            <!-- 5. Materiais -->
-            <div class="form-section" id="sec-5">
-                <div style="margin-bottom: 20px;">
-                    <h2 style="margin-bottom: 5px;">Materiais</h2>
-                    <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Escala o seu time: use as setas ↑ ↓ para criar seu ranking de titulares! O que ficar no topo é o seu craque.</p>
-                </div>
-                <div id="materialRanking"></div>
-                <p style="margin: 20px 0 10px; font-weight: 600;">Algum que prefere EVITAR? (Opcional)</p>
-                <div class="options-grid">
-                    <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="algodao"><label>Algodão</label></div>
-                    <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="poliester"><label>Poliéster</label></div>
-                    <div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input type="checkbox" name="material_avoid" value="misturas"><label>Misturas</label></div>
-                </div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(5)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(5)">Próximo Passo</button>
-                </div>
-            </div>
-
-            <!-- 6. Estilo -->
-            <div class="form-section" id="sec-6">
-                <div style="margin-bottom: 20px;">
-                    <h2 style="margin-bottom: 5px;">Estilo</h2>
-                    <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Tática de Jogo: Organize sua formação ideal com as setas ↑ ↓. O estilo no topo define como você entra em campo!</p>
-                </div>
-                <div id="styleRanking"></div>
-                <p style="margin: 20px 0 10px; font-weight: 600;">O que NÃO combina com o seu jogo? (Opcional)</p>
-                <div class="options-grid">
-                    <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="retro"><label>Retrô</label></div>
-                    <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="esportivo"><label>Esportivo</label></div>
-                    <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="casual"><label>Casual</label></div>
-                    <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="social"><label>Social</label></div>
-                    <div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input type="checkbox" name="style_avoid" value="modapraia"><label>Moda Praia</label></div>
-                </div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(6)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(6)">Próximo Passo</button>
-                </div>
-            </div>
-
-            <!-- 7. Produtos -->
-            <div class="form-section" id="sec-7">
-                <div class="title-wrapper">
-                    <h2>O que mais gostaria de receber?</h2>
-                    <button type="button" class="select-all-btn" onclick="toggleAllGlobal()">Marcar Todas as Categorias</button>
-                </div>
-                <div id="productsContainer"></div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(7)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(7)">Próximo Passo</button>
-                </div>
-            </div>
-
-            <!-- 8. Acervo -->
-            <div class="form-section" id="sec-8">
-                <h2>Indique suas camisas</h2>
-                <div id="inventoryInitial">
-                    <p class="section-desc">Selecione as camisas que você já possui para garantir a surpresa.</p>
-                    <button type="button" class="btn-indicar" onclick="showInventoryList()">Indicar</button>
-                </div>
-                <div id="inventoryWrapper" style="display: none; margin-top: 20px;">
-                    <div id="inventoryContainer"></div>
-                </div>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(8)">Voltar</button>
-                    <button type="button" class="btn-confirm" onclick="confirmStep(8)">Próximo Passo</button>
-                </div>
-            </div>
-
-            <!-- 9. Observações -->
-            <div class="form-section" id="sec-9">
-                <h2>Observação Adicional (Opcional)</h2>
-                <textarea name="observations" class="text-input" rows="4" style="margin-top: 15px;" placeholder="Exemplo: cores que você evita, estilos que não gosta, suas preferências"></textarea>
-                <div class="action-group">
-                    <button type="button" class="btn-back" onclick="backStep(9)">Voltar</button>
-                    <button type="submit" class="btn-confirm">Finalizar Curadoria</button>
-                </div>
-            </div>
-        </form>
-
-        <div id="successScreen" style="display: none; text-align: center; padding: 60px 20px;">
-            <h2 style="color: var(--primary); font-size: 3rem; font-family: 'Bebas Neue', cursive;">✓ PERFIL SALVO!</h2>
-            <p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo. O processamento é <strong>100% seguro e criptografado</strong> via Asaas (Instituição autorizada pelo Banco Central).</p>
-            
-            <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-                
-                <!-- CARD MENSAL -->
-                <div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO MENSAL</h3>
-                    <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 149,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano sem fidelidade. Renovação mensal automática, receba uma caixa por mês.</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
-                        <li>✓ 100% do valor revertido em produtos</li>
-                        <li>✓ Frete grátis</li>
-                    </ul>
-                    <a href="https://www.asaas.com/c/q18x6viplbjzrubw" id="btn-mensal" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR MENSAL</a>
-                </div>
-
-                <!-- CARD TRIMESTRAL -->
-                <div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL</h3>
-                    <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 134,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 3 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
-                        <li>✓ Prioridade em lançamentos</li>
-                        <li>✓ 100% do valor revertido em produtos</li>
-                        <li>✓ Frete grátis</li>
-                    </ul>
-                    <a href="https://www.asaas.com/c/3l9jh2rbcx21dumh" id="btn-trimestral" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR TRIMESTRAL</a>
-                </div>
-
-                <!-- CARD ANUAL -->
-                <div style="background: var(--surface-alt); border: 2px solid var(--primary); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left; position: relative;">
-                    <div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">CUSTO BENEFÍCIO</div>
-                    <h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL</h3>
-                    <p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 124,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 12 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
-                        <li>✓ Caixa extra de aniversário</li>
-                        <li>✓ Prioridade em lançamentos</li>
-                        <li>✓ 2 trocas por ano</li>
-                        <li>✓ 100% do valor revertido em produtos</li>
-                        <li>✓ Frete grátis</li>
-                    </ul>
-                    <a href="https://www.asaas.com/c/vcvruvhhyx6w01oo" id="btn-anual" class="btn-confirm" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;">ASSINAR ANUAL</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="container">
+<div class="header">
+<img alt="Logo Jogada Ensaiada" class="logo-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663814465640/FClWsGAlLirkycJB.png"/>
+<h1>Sua Curadoria</h1>
+</div>
+<form class="form-wrapper" id="curationForm">
+<!-- 1. Dados Pessoais -->
+<div class="form-section active" id="sec-1">
+<h2>Seus Dados Pessoais</h2>
+<div class="input-group" style="margin-top: 20px;">
+<label>Nome Completo *</label>
+<input class="text-input" name="nome" onchange="checkCompletion(1)" required="" type="text"/>
+</div>
+<div class="input-group">
+<label>E-mail *</label>
+<input class="text-input" name="email" onchange="checkCompletion(1)" required="" type="email"/>
+</div>
+<div class="input-group">
+<label>Telefone *</label>
+<input class="text-input" id="telefone" maxlength="15" name="telefone" onchange="checkCompletion(1)" placeholder="(00) 00000-0000" required="" type="tel"/>
+</div>
+<div class="input-group">
+<label>Data de Nascimento *</label>
+<input class="text-input" id="birthDate" name="nascimento" onchange="checkCompletion(1)" required="" type="date"/>
+<p class="error-msg" id="ageError">Você deve ter pelo menos 18 anos.</p>
+</div>
+<button class="btn-confirm" onclick="confirmStep(1)" type="button">Confirmar Dados</button>
+</div>
+<!-- 2. Entrega -->
+<div class="form-section" id="sec-2"><h2>Consulte sua área de entrega</h2><p style="color:var(--text-dim);margin-top:10px;">Digite somente o CEP para verificar se ele está dentro da nossa área de entrega. O endereço completo será informado com segurança na etapa de pagamento.</p><div class="input-group" style="margin-top:20px;"><label>CEP *</label><input class="text-input" id="cepInput" maxlength="9" name="cep" placeholder="00000-000" required="" type="text"/><button class="btn-confirm" id="btnConsultarCep" onclick="handleCEP()" type="button">Consultar CEP</button><div aria-live="polite" class="delivery-check" id="deliveryResult"></div></div>
+    <button type="button" class="cities-trigger" onclick="openDeliveryModal()">
+        📍 Ver cidades atendidas
+    </button>
+<p style="font-size:.82rem;color:var(--text-dim);margin-top:14px;">Para CEPs fora da área própria, consultaremos a possibilidade de envio por Correios ou transportadora. O valor e o prazo precisam ser confirmados antes da cobrança, pois dependem do CEP, peso e dimensões da caixa.</p><div class="action-group"><button class="btn-back" onclick="backStep(2)" type="button">Voltar</button><button class="btn-confirm" onclick="confirmStep(2)" type="button">Continuar</button></div></div>
+<!-- 3. Time -->
+<div class="form-section" id="sec-3">
+<h2>Qual seu time de coração?</h2>
+<div class="options-grid">
+<div class="option" onclick="selectOption(this, 'team', 'radio')"><input name="team" required="" type="radio" value="botafogo"/><label>Botafogo</label></div>
+<div class="option" onclick="selectOption(this, 'team', 'radio')"><input name="team" type="radio" value="flamengo"/><label>Flamengo</label></div>
+<div class="option" onclick="selectOption(this, 'team', 'radio')"><input name="team" type="radio" value="fluminense"/><label>Fluminense</label></div>
+<div class="option" onclick="selectOption(this, 'team', 'radio')"><input name="team" type="radio" value="vasco"/><label>Vasco</label></div>
+</div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(3)" type="button">Voltar</button>
+</div>
+</div>
+<!-- 4. Modelagem e Tamanho -->
+<div class="form-section" id="sec-4">
+<h2>Modelagem</h2>
+<p class="section-desc">Escolha perfeita para você entrar em campo.</p>
+<div class="options-grid" style="margin-bottom: 30px;">
+<div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input name="modelagem" required="" type="radio" value="masculina"/><label>Masculina</label></div>
+<div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input name="modelagem" type="radio" value="feminina"/><label>Feminina</label></div>
+<div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input name="modelagem" type="radio" value="infantil"/><label>Infantil</label></div>
+<div class="option" onclick="selectOption(this, 'modelagem', 'radio')"><input name="modelagem" type="radio" value="ambas"/><label>Masculina e Feminina</label></div>
+</div>
+<h2>Tamanho</h2>
+<p class="section-desc">Qual o tamanho ideal da sua camisa?</p>
+<div class="options-grid" id="size-adult">
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" required="" type="radio" value="PP"/><label>PP</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="P"/><label>P</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="M"/><label>M</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="G"/><label>G</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="GG"/><label>GG</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="XG"/><label>XG</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="XXG"/><label>XXG</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="XXXG"/><label>XXXG</label></div>
+</div>
+<div class="options-grid" id="size-female" style="display: none;">
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" required="" type="radio" value="PP"/><label>PP</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="P"/><label>P</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="M"/><label>M</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="G"/><label>G</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="GG"/><label>GG</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="XG"/><label>XG</label></div>
+</div>
+<div class="options-grid" id="size-kids" style="display: none;">
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" required="" type="radio" value="2"/><label>2</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="4"/><label>4</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="6"/><label>6</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="8"/><label>8</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="10"/><label>10</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="12"/><label>12</label></div>
+<div class="option" onclick="selectOption(this, 'tamanho', 'radio')"><input name="tamanho" type="radio" value="14"/><label>14</label></div>
+</div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(4)" type="button">Voltar</button>
+<button class="btn-confirm" onclick="confirmStep(4)" type="button">Próximo Passo</button>
+</div>
+</div>
+<!-- 5. Materiais -->
+<div class="form-section" id="sec-5">
+<div style="margin-bottom: 20px;">
+<h2 style="margin-bottom: 5px;">Materiais</h2>
+<p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Escala o seu time: use as setas ↑ ↓ para criar seu ranking de titulares! O que ficar no topo é o seu craque.</p>
+</div>
+<div id="materialRanking"></div>
+<p style="margin: 20px 0 10px; font-weight: 600;">Algum que prefere EVITAR? (Opcional)</p>
+<div class="options-grid">
+<div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input name="material_avoid" type="checkbox" value="algodao"/><label>Algodão</label></div>
+<div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input name="material_avoid" type="checkbox" value="poliester"/><label>Poliéster</label></div>
+<div class="option" onclick="selectOption(this, 'mat_avoid', 'checkbox')"><input name="material_avoid" type="checkbox" value="misturas"/><label>Misturas</label></div>
+</div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(5)" type="button">Voltar</button>
+<button class="btn-confirm" onclick="confirmStep(5)" type="button">Próximo Passo</button>
+</div>
+</div>
+<!-- 6. Estilo -->
+<div class="form-section" id="sec-6">
+<div style="margin-bottom: 20px;">
+<h2 style="margin-bottom: 5px;">Estilo</h2>
+<p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; margin: 0;">Tática de Jogo: Organize sua formação ideal com as setas ↑ ↓. O estilo no topo define como você entra em campo!</p>
+</div>
+<div id="styleRanking"></div>
+<p style="margin: 20px 0 10px; font-weight: 600;">O que NÃO combina com o seu jogo? (Opcional)</p>
+<div class="options-grid">
+<div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input name="style_avoid" type="checkbox" value="retro"/><label>Retrô</label></div>
+<div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input name="style_avoid" type="checkbox" value="esportivo"/><label>Esportivo</label></div>
+<div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input name="style_avoid" type="checkbox" value="casual"/><label>Casual</label></div>
+<div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input name="style_avoid" type="checkbox" value="social"/><label>Social</label></div>
+<div class="option" onclick="selectOption(this, 'sty_avoid', 'checkbox')"><input name="style_avoid" type="checkbox" value="modapraia"/><label>Moda Praia</label></div>
+</div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(6)" type="button">Voltar</button>
+<button class="btn-confirm" onclick="confirmStep(6)" type="button">Próximo Passo</button>
+</div>
+</div>
+<!-- 7. Produtos -->
+<div class="form-section" id="sec-7">
+<div class="title-wrapper">
+<h2>O que mais gostaria de receber?</h2>
+<button class="select-all-btn" onclick="toggleAllGlobal()" type="button">Marcar Todas as Categorias</button>
+</div>
+<div id="productsContainer"></div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(7)" type="button">Voltar</button>
+<button class="btn-confirm" onclick="confirmStep(7)" type="button">Próximo Passo</button>
+</div>
+</div>
+<!-- 8. Acervo -->
+<div class="form-section" id="sec-8">
+<h2>Indique suas camisas</h2>
+<div id="inventoryInitial">
+<p class="section-desc">Selecione as camisas que você já possui para garantir a surpresa.</p>
+<button class="btn-indicar" onclick="showInventoryList()" type="button">Indicar</button>
+</div>
+<div id="inventoryWrapper" style="display: none; margin-top: 20px;">
+<div id="inventoryContainer"></div>
+</div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(8)" type="button">Voltar</button>
+<button class="btn-confirm" onclick="confirmStep(8)" type="button">Próximo Passo</button>
+</div>
+</div>
+<!-- 9. Observações -->
+<div class="form-section" id="sec-9">
+<h2>Observação Adicional (Opcional)</h2>
+<textarea class="text-input" name="observations" placeholder="Exemplo: cores que você evita, estilos que não gosta, suas preferências" rows="4" style="margin-top: 15px;"></textarea><div class="input-group" style="margin-top:24px;"><label>Cupom de desconto (Opcional)</label><input autocomplete="off" class="text-input" id="couponInput" name="cupom" placeholder="Digite seu cupom" type="text"/><button class="btn-confirm" onclick="validateCoupon(true)" style="margin-top:10px;" type="button">Validar cupom</button><div aria-live="polite" class="coupon-feedback" id="couponFeedback"></div></div>
+<div class="action-group">
+<button class="btn-back" onclick="backStep(9)" type="button">Voltar</button>
+<button class="btn-confirm" type="submit">Finalizar Curadoria</button>
+</div>
+</div>
+</form>
+<div id="successScreen" style="display: none; text-align: center; padding: 60px 20px;">
+<h2 style="color: var(--primary); font-size: 3rem; font-family: 'Bebas Neue', cursive;">✓ PERFIL SALVO!</h2>
+<p style="margin-bottom: 30px; font-size: 1.1rem;">Sua curadoria está quase pronta. Para finalizar e garantir a sua caixa, escolha o seu plano abaixo. O processamento é <strong>100% seguro e criptografado</strong> via Asaas (Instituição autorizada pelo Banco Central).</p>
+<div class="discount-note" id="discountNote" style="display:none;"><strong>✓ Cupom validado!</strong><br/>Os valores promocionais abaixo já estão aplicados aos planos mensal e trimestral. O plano anual permanece com o valor e o link atuais porque não foi informado um link promocional específico para ele.</div><div id="normalPlans" style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+<!-- CARD MENSAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO MENSAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 149,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano sem fidelidade. Renovação mensal automática, receba uma caixa por mês.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/q18x6viplbjzrubw" id="btn-mensal" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR MENSAL</a>
+</div>
+<!-- CARD TRIMESTRAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 134,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 3 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ Prioridade em lançamentos</li>
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/3l9jh2rbcx21dumh" id="btn-trimestral" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR TRIMESTRAL</a>
+</div>
+<!-- CARD ANUAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--primary); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left; position: relative;">
+<div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">CUSTO BENEFÍCIO</div>
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 124,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 12 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ Caixa extra de aniversário</li>
+<li>✓ Prioridade em lançamentos</li>
+<li>✓ 2 trocas por ano</li>
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/vcvruvhhyx6w01oo" id="btn-anual" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR ANUAL</a>
+</div>
+</div><div id="discountedPlans" style="display: flex; flex-direction: column; gap: 20px; align-items: center;;display:none;">
+<!-- CARD MENSAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO MENSAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;"><span class="old-price">R$ 149,90</span><strong>R$ 134,90</strong> <span style="font-size:.9rem;font-weight:normal;color:var(--text-dim);">/mês</span><span class="discount-badge">10% OFF</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano sem fidelidade. Renovação mensal automática, receba uma caixa por mês.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/gjqfrsqpx0sy2sr0" id="cupom-btn-mensal" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR MENSAL</a>
+</div>
+<!-- CARD TRIMESTRAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--border); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left;">
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO TRIMESTRAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;"><span class="old-price">R$ 134,90</span><strong>R$ 120,99</strong> <span style="font-size:.9rem;font-weight:normal;color:var(--text-dim);">/mês</span><span class="discount-badge">10% OFF</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 3 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ Prioridade em lançamentos</li>
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/2ypa540cf4g2yujw" id="cupom-btn-trimestral" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR TRIMESTRAL</a>
+</div>
+<!-- CARD ANUAL -->
+<div style="background: var(--surface-alt); border: 2px solid var(--primary); border-radius: 15px; padding: 25px; width: 100%; max-width: 400px; text-align: left; position: relative;">
+<div style="position: absolute; top: -12px; right: 20px; background: var(--primary-gradient); color: #000; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;">CUSTO BENEFÍCIO</div>
+<h3 style="color: var(--primary); font-family: 'Bebas Neue', cursive; font-size: 2rem;">PLANO ANUAL</h3>
+<p style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">R$ 124,90 <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-dim);">/mês</span></p>
+<p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-dim);">Plano com fidelidade de 12 meses. Renovação mensal automática, receba uma caixa por mês durante este período.</p>
+<ul style="list-style: none; padding: 0; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8;">
+<li>✓ Caixa extra de aniversário</li>
+<li>✓ Prioridade em lançamentos</li>
+<li>✓ 2 trocas por ano</li>
+<li>✓ 100% do valor revertido em produtos</li>
+<li>✓ Frete grátis</li>
+</ul>
+<a class="btn-confirm" href="https://www.asaas.com/c/vcvruvhhyx6w01oo" id="cupom-btn-anual" rel="noopener noreferrer" style="display: block; text-align: center; text-decoration: none; padding: 15px;" target="_blank">ASSINAR ANUAL</a>
+</div>
+</div>
+</div>
+</div>
+<script>
         let currentActive = 1;
         const totalSections = 9;
+        let cepConsultado=false; let cepDentroArea=false; let cidadeConsultada=""; let cupomValido=false;
+        const CUPONS_VALIDOS=["ARTHURZINHO","LUIZA","PROFESSOR"];
+        const CIDADES_AREA=["rio de janeiro","queimados","sao joao de meriti","duque de caxias","nilopolis","nova iguacu","niteroi","sao goncalo"];
         
         const materialRanking = ['algodao', 'poliester', 'misturas'];
         const styleRanking = ['retro', 'esportivo', 'casual', 'social', 'modapraia'];
@@ -677,13 +796,7 @@
                 const age = new Date().getFullYear() - bday.getFullYear();
                 if (age < 18) { document.getElementById('ageError').style.display = 'block'; return false; }
             }
-            if (n === 2) {
-                const cityInput = document.getElementById('cidade').value;
-                if (!cityInput) return false;
-                const city = cityInput.toLowerCase();
-                const allowed = ['rio de janeiro', 'queimados', 'são joão de meriti', 'duque de caxias', 'nilópolis', 'nova iguaçu', 'niterói', 'são gonçalo'];
-                if (!allowed.includes(city)) { document.getElementById('cepError').style.display = 'block'; return false; }
-            }
+            if (n === 2) { if (!cepConsultado) { alert("Consulte o CEP antes de continuar."); return false; } }
             return true;
         }
 
@@ -722,18 +835,31 @@
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
         });
 
-        function handleCEP() {
-            const cep = document.getElementById('cepInput').value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r => r.json()).then(d => {
-                    if (!d.erro) {
-                        document.getElementById('logradouro').value = d.logradouro;
-                        document.getElementById('cidade').value = d.localidade;
-                        document.getElementById('cepError').style.display = 'none';
-                    }
-                });
-            }
+        function normalizarTexto(texto){return String(texto||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();}
+        async function handleCEP(){const input=document.getElementById('cepInput'),result=document.getElementById('deliveryResult'),button=document.getElementById('btnConsultarCep'),cep=input.value.replace(/\D/g,'');cepConsultado=false;cepDentroArea=false;cidadeConsultada="";if(cep.length!==8){result.className="delivery-check error";result.textContent="Digite um CEP válido com 8 números.";return;}button.disabled=true;button.textContent="CONSULTANDO...";try{const response=await fetch(`https://viacep.com.br/ws/${cep}/json/`);const dados=await response.json();if(dados.erro)throw new Error("CEP não encontrado.");cidadeConsultada=dados.localidade||"";cepDentroArea=CIDADES_AREA.includes(normalizarTexto(cidadeConsultada));cepConsultado=true;if(cepDentroArea){result.className="delivery-check success";result.innerHTML=`<strong>✓ CEP dentro da área de entrega.</strong><br>Cidade identificada: ${cidadeConsultada}.<br>O endereço completo será informado na etapa de pagamento.`;}else{result.className="delivery-check warning";result.innerHTML=`<strong>CEP fora da área própria.</strong><br>Cidade identificada: ${cidadeConsultada}.<br>Você pode continuar a curadoria. A equipe verificará envio por Correios ou transportadora e confirmará valor e prazo antes da cobrança.`;}}catch(error){result.className="delivery-check error";result.textContent=error.message||"Não foi possível consultar o CEP.";}finally{button.disabled=false;button.textContent="CONSULTAR CEP";}}
+        function validateCoupon(showMessage=false){const input=document.getElementById('couponInput'),feedback=document.getElementById('couponFeedback'),codigo=String(input.value||"").trim().toUpperCase();if(!codigo){cupomValido=false;if(showMessage){feedback.className="coupon-feedback invalid";feedback.textContent="Digite um cupom para validar.";}else{feedback.className="coupon-feedback";feedback.textContent="";}return false;}cupomValido=CUPONS_VALIDOS.includes(codigo);if(cupomValido){feedback.className="coupon-feedback valid";feedback.textContent="✓ Cupom válido. Os planos promocionais aparecerão ao final.";}else{feedback.className="coupon-feedback invalid";feedback.textContent="Cupom inválido. Confira a escrita e tente novamente.";}return cupomValido;}
+
+
+        function openDeliveryModal() {
+            const modal = document.getElementById('deliveryModal');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
+
+        function closeDeliveryModal() {
+            const modal = document.getElementById('deliveryModal');
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeDeliveryModal();
+        });
+
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('deliveryModal');
+            if (event.target === modal) closeDeliveryModal();
+        });
 
         function renderRanking(id, order, labels, moveFunc) {
             const cont = document.getElementById(id); cont.innerHTML = '';
@@ -829,6 +955,9 @@
             // Capturar os rankings gerados via Javascript (como eles são Arrays, vamos transformá-los em texto separado por vírgula)
             formData.append('materialRanking', materialRanking.join(', '));
             formData.append('styleRanking', styleRanking.join(', '));
+            formData.append('cidadeConsultada', cidadeConsultada);
+            formData.append('cepDentroArea', cepDentroArea ? 'Sim' : 'Não');
+            const codigoCupom=String(document.getElementById('couponInput').value||'').trim().toUpperCase(); if(codigoCupom) validateCoupon(false); formData.set('cupom',codigoCupom); formData.append('cupomValido',cupomValido?'Sim':'Não');
 
             // URL do seu Google Apps Script
             const scriptURL = 'https://script.google.com/a/macros/jogadaensaiada.com/s/AKfycbywwrJCB0ahROfiHboeJ8nIeuPfcaLqxtopPE0wO3oth2WyxhmrJZVHSMGTfKrW7Kc/exec';
@@ -837,6 +966,9 @@
                 .then(response => {
                     document.getElementById('curationForm').style.display = 'none';
                     document.getElementById('successScreen').style.display = 'block';
+                    document.getElementById('normalPlans').style.display = cupomValido ? 'none' : 'flex';
+                    document.getElementById('discountedPlans').style.display = cupomValido ? 'flex' : 'none';
+                    document.getElementById('discountNote').style.display = cupomValido ? 'block' : 'none';
                     window.scrollTo(0, 0);
                 })
                 .catch(error => {
@@ -844,6 +976,9 @@
                     // O erro de CORS às vezes cai no catch no ambiente local, vamos forçar a tela de sucesso se isso acontecer.
                     document.getElementById('curationForm').style.display = 'none';
                     document.getElementById('successScreen').style.display = 'block';
+                    document.getElementById('normalPlans').style.display = cupomValido ? 'none' : 'flex';
+                    document.getElementById('discountedPlans').style.display = cupomValido ? 'flex' : 'none';
+                    document.getElementById('discountNote').style.display = cupomValido ? 'block' : 'none';
                     window.scrollTo(0, 0);
                 });
         };
@@ -854,5 +989,35 @@
         initInventory();
         updateProgress();
     </script>
+
+    <div id="deliveryModal" class="delivery-modal" role="dialog" aria-modal="true" aria-labelledby="deliveryModalTitle">
+        <div class="delivery-modal-card">
+            <div class="delivery-modal-header">
+                <div>
+                    <h2 id="deliveryModalTitle" style="margin:0;">Cidades atendidas</h2>
+                    <p style="color:var(--text-dim); margin-top:4px;">Confira a nossa área própria de entrega.</p>
+                </div>
+                <button type="button" class="delivery-modal-close" onclick="closeDeliveryModal()" aria-label="Fechar">×</button>
+            </div>
+
+            <div class="cities-list">
+                <div class="city-chip">Rio de Janeiro</div>
+                <div class="city-chip">Niterói</div>
+                <div class="city-chip">São Gonçalo</div>
+                <div class="city-chip">Duque de Caxias</div>
+                <div class="city-chip">Nova Iguaçu</div>
+                <div class="city-chip">Nilópolis</div>
+                <div class="city-chip">São João de Meriti</div>
+                <div class="city-chip">Queimados</div>
+            </div>
+
+            <a href="https://www.google.com/maps/d/viewer?mid=1gMfRI6xbIPtUoZL-c_BqfECqQ_5kLNI"
+               target="_blank" rel="noopener noreferrer" class="btn-confirm"
+               style="display:block; text-align:center; text-decoration:none;">
+               Abrir mapa completo
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>
