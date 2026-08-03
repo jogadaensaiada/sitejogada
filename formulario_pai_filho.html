@@ -411,7 +411,7 @@
             <!-- SEÇÃO 3: PACOTE -->
             <div class="section">
                 <h2><span>3</span> Escolha o Pacote</h2>
-                <p class="instruction-text">Sua caixa terá <b>R$ 200,00 em produtos</b>. Escolha o melhor modelo para a sua jogada:</p>
+                <p class="instruction-text">Sua caixa terá <b>R$ 300,00 em produtos</b>. Escolha o melhor modelo para a sua jogada:</p>
                 <div class="radio-card-group">
                     <label class="radio-card">
                         <input type="radio" name="pacote" value="Produto Premium" required>
@@ -546,6 +546,33 @@
                     <input type="checkbox" id="consentimento" required>
                     <span>Autorizo o uso destes dados exclusivamente para atendimento, curadoria e entrega da campanha de Dia dos Pais, conforme a política de privacidade da Jogada Ensaiada.</span>
                 </label>
+            </div>
+
+
+            <!-- SEÇÃO 8: PAGAMENTO -->
+            <div class="section">
+                <h2><span>8</span> Forma de Pagamento</h2>
+                <p class="instruction-text">
+                    Depois de enviar a curadoria, você será direcionado(a) para o pagamento seguro no Asaas.
+                </p>
+
+                <div class="radio-card-group">
+                    <label class="radio-card">
+                        <input type="radio" name="formaPagamento" value="Pix, crédito à vista ou boleto" data-payment-url="https://www.asaas.com/c/vw27vyg41n4lvwgf" required>
+                        <div class="info">
+                            <b>Pix, crédito à vista ou boleto</b>
+                            <span>Pagamento em uma única vez</span>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="formaPagamento" value="Crédito parcelado em 2x" data-payment-url="https://www.asaas.com/c/4vft5oibprt38azk">
+                        <div class="info">
+                            <b>Crédito parcelado em 2x</b>
+                            <span>Pagamento dividido em duas parcelas</span>
+                        </div>
+                    </label>
+                </div>
             </div>
 
             <button type="submit" id="submitButton" class="btn-submit">Finalizar Minha Jogada</button>
@@ -767,6 +794,7 @@
                     momentoFutebol: document.getElementById('momentoFutebol').value,
                     mensagemCartao: document.getElementById('mensagemCartao').value.trim(),
                     observacoes: document.getElementById('observacoes').value.trim(),
+                    formaPagamento: document.querySelector('input[name="formaPagamento"]:checked').value,
                     fotos,
                     paginaOrigem: window.location.href,
                     navegador: navigator.userAgent
@@ -782,18 +810,21 @@
                     body: JSON.stringify(dados)
                 });
 
+                const pagamentoSelecionado = document.querySelector('input[name="formaPagamento"]:checked');
+                const paymentUrl = pagamentoSelecionado.dataset.paymentUrl;
+
                 statusBox.className = "form-status success";
                 statusBox.innerHTML = `
                     <strong>Jogada recebida!</strong><br>
                     Número do pedido: <strong>${numeroPedido}</strong><br>
-                    Enviamos os dados para a equipe da Jogada Ensaiada.
+                    Agora você será direcionado(a) para concluir o pagamento.
                 `;
 
-                form.reset();
-                setSameTeam(true);
-                document.querySelectorAll('.inventory-item').forEach(item => item.checked = false);
-                document.getElementById('fileList').textContent = "";
                 window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+
+                setTimeout(() => {
+                    window.location.href = paymentUrl;
+                }, 1200);
 
             } catch (error) {
                 console.error(error);
