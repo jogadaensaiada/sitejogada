@@ -252,10 +252,10 @@ const state = {
 };
 
 const CLUBES = [
-  {'botafogo', nome:'Botafogo',
-  {'flamengo', nome:'Flamengo'},
-  {'fluminense', nome:'Fluminense'},
-  {'vasco', nome:'Vasco da Gama'},
+  {id:'botafogo', nome:'Botafogo', cor:'#0A0A0A'},
+  {id:'flamengo', nome:'Flamengo', cor:'#C8102E'},
+  {id:'fluminense', nome:'Fluminense', cor:'#7A1428'},
+  {id:'vasco', nome:'Vasco da Gama', cor:'#0A0A0A'},
 ];
 
 const CIDADES_ATENDIDAS = ['Rio de Janeiro','Niterói','São Gonçalo','Duque de Caxias','Nova Iguaçu','Nilópolis','São João de Meriti','Queimados'];
@@ -381,8 +381,7 @@ function renderHero(){
   const box = el(`
     <div>
       <h1 class="step-title">Sua caixa, com a cara do seu time</h1>
-      <p class="step-sub">Responda algumas perguntas rápidas e a gente cuida do resto.
-      Camisa, estilo e tamanho certos, todo mês na sua casa.</p>
+      <p class="step-sub">Responde umas perguntas rápidas e a gente cuida do resto: camisa, estilo e tamanho certos, todo mês na sua casa.</p>
       <div class="actions">
         <button class="btn-primary" id="startBtn">Bora montar minha caixa</button>
       </div>
