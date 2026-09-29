@@ -157,6 +157,9 @@
   .banner{ border-radius:10px; padding:12px 14px; font-size:13.5px; margin-top:14px; }
   .banner.ok{ background:rgba(79,174,122,.12); border:1px solid rgba(79,174,122,.4); color:#9BD8B6; }
   .banner.warn{ background:rgba(217,83,79,.1); border:1px solid rgba(217,83,79,.35); color:#F0A9A6; }
+  #cepResult .banner{background:var(--surface);border:1px solid var(--border);color:#BDBDBD;font-size:13px;}
+  #f_cep.has-error input{border-color:#777;}
+  #f_cep .error-msg{color:#BDBDBD;}
   .spinner{ display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.25); border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px; margin-right:6px;}
   @keyframes spin{ to{ transform:rotate(360deg);} }
 
@@ -498,12 +501,12 @@ function renderCep(){
   const d = state.data;
   const box = el(`<div>${header(steps[state.step].title, steps[state.step].sub)}
     <div class="field" id="f_cep">
-      <label class="field-label">CEP (opcional)</label>
-      <input type="text" id="i_cep" placeholder="00000-000" value="${d.cep}" inputmode="numeric" autocomplete="postal-code" maxlength="9">
+      <label class="field-label" for="i_cep">CEP (opcional)</label>
+      <input type="text" id="i_cep" placeholder="00000-000" value="" aria-describedby="cepResult" inputmode="numeric" autocomplete="postal-code" maxlength="9">
       <div class="error-msg">Digite um CEP válido.</div>
     </div>
     <button class="btn-ghost" id="checkBtn" style="width:100%;">Consultar CEP</button>
-    <div id="cepResult"></div>
+    <div id="cepResult" role="status" aria-live="polite" aria-atomic="true"></div>
     <p style="margin-top:18px;"><button class="link-btn" id="toggleCidades">Ver cidades atendidas</button></p>
     <div id="cidadesBox" style="display:none;" class="hint">${CIDADES_ATENDIDAS.join(' · ')}. Outras regiões podem ser avaliadas pela equipe.</div>
     <div class="actions">
@@ -515,13 +518,23 @@ function renderCep(){
   const input = box.querySelector('#i_cep');
   const checkBtn = box.querySelector('#checkBtn');
   const resultBox = box.querySelector('#cepResult');
+  input.value = String(d.cep || '').replace(/\D/g,'').slice(0,8).replace(/^(\d{5})(\d)/, '$1-$2');
   let requestId = 0;
+  let activeController;
+  function resetResult(){
+    d.cidade = '';
+    d.cepOk = false;
+    d.cepDentroArea = false;
+  }
+  resetResult();
   const normalizarTexto = texto => String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
   input.addEventListener('input', ()=>{
     let v = input.value.replace(/\D/g,'').slice(0,8);
     if(v.length>5) v = v.slice(0,5)+'-'+v.slice(5);
     input.value = v;
+    input.removeAttribute('aria-invalid');
     requestId++;
+    if(activeController) activeController.abort();
     d.cep = v;
     d.cidade = '';
     d.cepOk = false;
@@ -539,13 +552,15 @@ function renderCep(){
 
   async function consultarFonte(url, transformar, timeoutMs = 8000){
     const controller = new AbortController();
+    activeController = controller;
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try{
       const response = await fetch(url, {signal:controller.signal});
+      if(response.status === 404) throw new Error('CEP_NAO_ENCONTRADO');
       if(!response.ok) throw new Error('Fonte indisponível');
       const dados = await response.json();
       const endereco = transformar(dados);
-      if(!endereco || !endereco.cidade || !endereco.uf) throw new Error('CEP não encontrado');
+      if(!endereco || !endereco.cidade || !endereco.uf) throw new Error('CEP_NAO_ENCONTRADO');
       return endereco;
     }finally{
       clearTimeout(timer);
@@ -554,11 +569,16 @@ function renderCep(){
 
   async function consultarCep(){
     const raw = input.value.replace(/\D/g,'');
+    if(checkBtn.disabled) return;
+    resetResult();
+    d.cep = input.value;
+    saveDraft();
     if(raw.length !== 8){
-      box.querySelector('#f_cep').classList.add('has-error');
+      input.setAttribute('aria-invalid', 'true');
       resultBox.innerHTML = `<div class="banner warn">Digite um CEP válido com 8 números.</div>`;
       return;
     }
+    input.removeAttribute('aria-invalid');
     const currentRequest = ++requestId;
     box.querySelector('#f_cep').classList.remove('has-error');
     checkBtn.disabled = true;
@@ -571,6 +591,8 @@ function renderCep(){
           dados => dados.erro ? null : {cidade:dados.localidade, uf:dados.uf}
         );
       }catch(viacepError){
+        if(currentRequest !== requestId) return;
+        if(viacepError.message === 'CEP_NAO_ENCONTRADO') throw viacepError;
         // A segunda fonte mantém a consulta disponível quando o ViaCEP falhar.
         endereco = await consultarFonte(
           `https://brasilapi.com.br/api/cep/v2/${raw}`,
@@ -588,7 +610,7 @@ function renderCep(){
       const banner = document.createElement('div');
       banner.className = `banner ${atendida ? 'ok' : 'warn'}`;
       banner.textContent = atendida
-        ? `✓ CEP dentro da área de entrega. Cidade identificada: ${endereco.cidade}. O endereço completo será informado na etapa de pagamento.`
+        ? `CEP dentro da área de entrega. Cidade identificada: ${endereco.cidade}. O endereço completo será informado na etapa de pagamento.`
         : `CEP fora da área própria. Cidade identificada: ${endereco.cidade}. Você pode continuar a curadoria. Nossa equipe confirmará a disponibilidade e as condições de entrega para sua região.`;
       resultBox.replaceChildren(banner);
     } catch(e){
@@ -597,7 +619,9 @@ function renderCep(){
         banner.className = 'banner warn';
         banner.textContent = e.name === 'AbortError'
           ? 'A consulta demorou demais. Verifique sua conexão e tente novamente.'
-          : 'Não foi possível localizar esse CEP. Confira os números e tente novamente.';
+          : e.message === 'CEP_NAO_ENCONTRADO'
+            ? 'CEP não encontrado. Confira os números e tente novamente.'
+            : 'Não foi possível consultar agora. Verifique sua conexão e tente novamente.';
         resultBox.replaceChildren(banner);
         d.cepOk = false;
         d.cepDentroArea = false;
@@ -610,9 +634,17 @@ function renderCep(){
     }
   }
   checkBtn.onclick = consultarCep;
+  input.addEventListener('keydown', event => {
+    if(event.key === 'Enter'){ event.preventDefault(); consultarCep(); }
+  });
 
-  box.querySelector('#backBtn').onclick = back;
-  box.querySelector('#nextBtn').onclick = next;
+  function sair(navegar){
+    requestId++;
+    if(activeController) activeController.abort();
+    navegar();
+  }
+  box.querySelector('#backBtn').onclick = () => sair(back);
+  box.querySelector('#nextBtn').onclick = () => sair(next);
   return box;
 }
 
