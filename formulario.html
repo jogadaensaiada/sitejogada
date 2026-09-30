@@ -13,12 +13,12 @@
     --surface:#141414;
     --surface-2:#1E1E1E;
     --border:#2A2A2A;
-    --gold:#C9A227;
-    --gold-hi:#E0B93D;
-    --text:#F3EFE4;
-    --muted:#93A19A;
+    --gold:#FFB800;
+    --gold-hi:#FFCA40;
+    --text:#FFFFFF;
+    --muted:#A0A0A0;
     --danger:#D9534F;
-    --ok:#4FAE7A;
+    --ok:#FFB800;
     --radius:14px;
     --maxw:560px;
   }
@@ -64,7 +64,7 @@
   }
   .clock-fill{
     height:100%; border-radius:99px;
-    background:linear-gradient(90deg,#5A5238,var(--gold));
+    background:linear-gradient(90deg,#806000,var(--gold));
     width:0%; transition:width .35s ease;
   }
   .clock-label{
@@ -95,7 +95,7 @@
     font-family:inherit;
   }
   textarea{min-height:90px; resize:vertical;}
-  input::placeholder,textarea::placeholder{color:#5C6D66;}
+  input::placeholder,textarea::placeholder{color:#808080;}
   input:focus,textarea:focus{ outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold); }
   .hint{font-size:12.5px; color:var(--muted); margin-top:6px;}
   .error-msg{font-size:12.5px; color:var(--danger); margin-top:6px; display:none;}
@@ -112,7 +112,7 @@
     font-size:15px; font-weight:500;
     transition:border-color .15s, background .15s;
   }
-  .opt:hover{ border-color:#3A4D44; }
+  .opt:hover{ border-color:#555555; }
   .opt.selected{ border-color:var(--gold); background:var(--surface-2); }
   .opt .check{
     margin-left:auto; width:18px; height:18px; border-radius:5px; border:1.5px solid var(--border);
@@ -139,17 +139,17 @@
   .actions{ display:flex; gap:10px; margin-top:26px; align-items:center; }
   button{ font-family:inherit; cursor:pointer; }
   .btn-primary{
-    flex:1; background:var(--gold); color:#1B1404; border:none; border-radius:10px;
+    flex:1; background:var(--gold); color:#000000; border:none; border-radius:10px;
     padding:15px 18px; font-size:15.5px; font-weight:700; letter-spacing:.01em;
     transition:background .15s;
   }
   .btn-primary:hover{ background:var(--gold-hi); }
-  .btn-primary:disabled{ background:#4A4738; color:#8A8672; cursor:not-allowed; }
+  .btn-primary:disabled{ background:#333333; color:#999999; cursor:not-allowed; }
   .btn-ghost{
     background:transparent; color:var(--muted); border:1px solid var(--border); border-radius:10px;
     padding:15px 16px; font-size:15px;
   }
-  .btn-ghost:hover{ border-color:#3A4D44; color:var(--text); }
+  .btn-ghost:hover{ border-color:#555555; color:var(--text); }
   .link-btn{ background:none; border:none; color:var(--gold); text-decoration:underline; font-size:14px; padding:0; }
 
   /* ---------- misc ---------- */
@@ -182,7 +182,7 @@
   }
   .plan.featured{ border-color:var(--gold); background:var(--surface-2); }
   .plan .badge{
-    position:absolute; top:-11px; right:16px; background:var(--gold); color:#1B1404;
+    position:absolute; top:-11px; right:16px; background:var(--gold); color:#000000;
     font-size:11px; font-weight:700; padding:4px 10px; border-radius:99px; letter-spacing:.03em;
   }
   .plan h3{ font-family:'Anton',sans-serif; font-weight:400; font-size:18px; margin:0 0 4px; }
@@ -206,12 +206,21 @@
   }
   .tag.selected{ border-color:var(--gold); background:var(--surface-2); color:var(--gold-hi); }
 
-  footer.legal{ text-align:center; font-size:11.5px; color:#5C6D66; padding:20px 0 0; }
+  footer.legal{ text-align:center; font-size:11.5px; color:#808080; padding:20px 0 0; }
 
   @media (max-width:380px){
     h1.step-title{ font-size:26px; }
     .sizegrid{ grid-template-columns:repeat(4,1fr); }
   }
+
+/* Paleta Jogada Ensaiada: preto, branco e amarelo-dourado */
+:root{--brand-gold:#FFB800;--brand-gold-hover:#FFCA40;--brand-black:#000000;--brand-white:#FFFFFF;--brand-muted:#A0A0A0;}
+body{background:var(--brand-black);color:var(--brand-white);}
+
+.banner.ok,.banner.warn{background:#141414;border:1px solid #2A2A2A;color:#BDBDBD;}
+.error-msg{color:#BDBDBD;}.field.has-error input,.field.has-error textarea{border-color:#808080;}
+footer.legal{color:#808080;}.clock-fill{background:linear-gradient(90deg,#806000,#FFB800);}
+
 </style>
 </head>
 <body>
@@ -837,7 +846,7 @@ function renderCheckout(){
   const box = el(`<div>
     <p class="eyebrow">Fechou!</p>
     <h1 class="step-title">Sua curadoria está pronta</h1>
-    <p class="step-sub">Dá uma conferida no seu perfil aqui embaixo e escolhe sua caixa. O resto a gente combina com você no WhatsApp depois que a assinatura entrar.</p>
+    <p class="step-sub">${caixaPreSelecionada ? "Confira seu perfil e continue para o pagamento." : "Dá uma conferida no seu perfil aqui embaixo e escolhe sua caixa."} O resto a gente combina com você no WhatsApp depois que a assinatura entrar.</p>
 
     <ul class="review-list">
       <li><span class="k">Time</span><span class="v">${clubNome(d.clube)}</span></li>
@@ -847,8 +856,8 @@ function renderCheckout(){
     </ul>
 
     <div class="field">
-      <p class="field-label">Escolha sua caixa</p>
-      <div class="box-switch" role="group" aria-label="Tipo de caixa">
+      <p class="field-label">${caixaPreSelecionada ? "Sua caixa" : "Escolha sua caixa"}</p>
+      <div class="box-switch" role="group" aria-label="Tipo de caixa" ${caixaPreSelecionada ? 'style="display:none"' : ''}>
         <button type="button" id="classicTab">Box Camisa 10</button>
         <button type="button" id="primeiroTempoTab">Box Primeiro Tempo</button>
       </div>
@@ -869,6 +878,7 @@ function renderCheckout(){
   </div>`);
 
   function renderPlanos(){
+    if(caixaPreSelecionada) d.tipoCaixa = caixaPreSelecionada;
     d.tipoCaixa = d.tipoCaixa === 'primeiroTempo' ? 'primeiroTempo' : 'camisa10';
     box.querySelector('#classicTab').classList.toggle('selected', d.tipoCaixa === 'camisa10');
     box.querySelector('#primeiroTempoTab').classList.toggle('selected', d.tipoCaixa === 'primeiroTempo');
@@ -876,8 +886,8 @@ function renderCheckout(){
     box.querySelector('#primeiroTempoTab').setAttribute('aria-pressed', String(d.tipoCaixa === 'primeiroTempo'));
     box.querySelector('#couponField').style.display = d.tipoCaixa === 'camisa10' ? '' : 'none';
     box.querySelector('#boxDescription').textContent = d.tipoCaixa === 'primeiroTempo'
-      ? 'Uma primeira experiência com a Jogada Ensaiada'
-      : 'Sua caixa do seu jeito, nos planos e valores de sempre.';
+      ? 'Box Primeiro Tempo — Uma primeira experiência com a Jogada Ensaiada'
+      : 'Box Camisa 10 — Sua caixa do seu jeito, nos planos e valores de sempre.';
     const usarCupom = d.cupomValido;
     const p = usarCupom ? PLANOS.cupom : PLANOS.padrao;
     const plansBox = box.querySelector('#plansBox');
@@ -889,7 +899,7 @@ function renderCheckout(){
         <div class="price">R$ 99,90 <small>/mês</small></div>
         <p class="desc">Sem fidelidade — renova automático, uma caixa por mês.</p>
         <ul><li>100% do valor revertido em produtos</li><li>Frete grátis</li></ul>
-        <button class="btn-primary">Quero a Box Primeiro Tempo</button>
+        <button class="btn-primary">Continuar para pagamento</button>
       </div>`);
       primeiroTempo.querySelector('button').onclick = () => finalizar(PRIMEIRO_TEMPO_PAYMENT_LINK, 'Box Primeiro Tempo');
       plansBox.appendChild(primeiroTempo);
@@ -1006,7 +1016,10 @@ const renderers = {
 /* =========================================================
    BOOT
    ========================================================= */
+const boxDaPagina = new URLSearchParams(window.location.search).get('box');
+const caixaPreSelecionada = ['primeiroTempo', 'camisa10'].includes(boxDaPagina) ? boxDaPagina : null;
 loadDraft();
+if(caixaPreSelecionada) state.data.tipoCaixa = caixaPreSelecionada;
 render();
 </script>
 </body>
