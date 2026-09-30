@@ -506,7 +506,7 @@ function renderCep(){
   const d = state.data;
   const box = el(`<div>${header(steps[state.step].title, steps[state.step].sub)}
     <div class="field" id="f_cep">
-      <label class="field-label" for="i_cep">CEP (opcional)</label>
+      <label class="field-label" for="i_cep">CEP</label>
       <input type="text" id="i_cep" placeholder="00000-000" value="" aria-describedby="cepResult" inputmode="numeric" autocomplete="postal-code" maxlength="9">
       <div class="error-msg">Digite um CEP válido.</div>
     </div>
